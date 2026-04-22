@@ -26,13 +26,15 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
 
   async function handleAction(status: 'approved' | 'rejected') {
     setLoading(status)
-    await fetch(`/api/admin/bookings/${booking.id}`, {
+    const res = await fetch(`/api/admin/bookings/${booking.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),
     })
     setLoading(null)
-    onStatusChange(booking.id, status)
+    if (res.ok) {
+      onStatusChange(booking.id, status)
+    }
   }
 
   return (
