@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LoginPage() {
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
-    })
+    });
 
-    setLoading(false)
+    setLoading(false);
 
     if (!res.ok) {
-      setError('Incorrect password. Try again.')
-      return
+      setError("Incorrect password. Try again.");
+      return;
     }
 
-    router.push('/')
-    router.refresh()
+    router.push("/");
+    router.refresh();
   }
 
   return (
@@ -46,14 +46,15 @@ export default function LoginPage() {
             Les Tsabloz
           </h1>
           <p className="text-sm text-stone-500 dark:text-stone-400">
-            Enter the password to continue
+            Un mot de passe est nécessaire pour accéder à ce site. Veuillez le
+            saisir ci-dessous.
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -68,11 +69,11 @@ export default function LoginPage() {
               disabled={loading}
               className="bg-[#7C9A7E] hover:bg-[#6a8a6c] text-white dark:bg-[#8FAF91] dark:hover:bg-[#7C9A7E] dark:text-stone-900"
             >
-              {loading ? 'Checking…' : 'Enter'}
+              {loading ? "Checking…" : "Continuer vers le site"}
             </Button>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
