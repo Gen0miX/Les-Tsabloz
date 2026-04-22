@@ -1,3 +1,4 @@
+// app/api/admin/ical-url/route.ts
 import { NextResponse } from 'next/server'
 import { createAuthClient } from '@/lib/supabase/auth-client'
 
