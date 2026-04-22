@@ -9,6 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+/docs
 
 # testing
 /coverage
@@ -44,3 +45,5 @@ next-env.d.ts
 
 # worktrees
 .worktrees
+
+

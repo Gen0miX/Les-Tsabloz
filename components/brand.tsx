@@ -47,9 +47,7 @@ export function LTWordmark({ subtle = false }: { subtle?: boolean }) {
           Les Tsabloz
         </span>
         {!subtle && (
-          <span className="lt-mono mt-[3px] text-[9px]">
-            Chalet privé · Vercorin · Valais
-          </span>
+          <span className="lt-mono mt-[3px] text-[9px]">Vercorin · Valais</span>
         )}
       </div>
     </div>

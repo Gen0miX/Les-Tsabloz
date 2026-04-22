@@ -18,7 +18,8 @@
       "Bash(npx shadcn@latest init -y -b radix -p nova)",
       "Bash(npx shadcn@latest add button card input textarea badge tabs dialog calendar --yes)",
       "Read(//c/Users/conta/.claude/projects/C--Users-conta-Documents-react-les-tsabloz/807524cc-3b5f-469d-b9a3-b1c5fde8372e/subagents/**)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(npx vitest *)"
     ]
   }
 }

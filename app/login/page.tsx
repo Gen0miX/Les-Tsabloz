@@ -67,8 +67,8 @@ export default function LoginPage() {
             </em>
           </h1>
           <p className="text-[var(--lt-ink-soft)] mt-5 mb-5 max-w-[40ch] text-[15px] leading-relaxed">
-            Un refuge boisé blotti au creux du Val d’Anniviers. Réservé à la
-            famille et aux amis proches.
+            Un vieux mayen perché près de Vercorin, rien que pour la famille et
+            les amis.
           </p>
         </div>
 
@@ -89,8 +89,8 @@ export default function LoginPage() {
           <span className="lt-mono">01 — Entrée</span>
           <h2 className="lt-display text-[38px] mt-3 mb-1.5">Bienvenue</h2>
           <p className="text-[var(--lt-ink-soft)] text-[14.5px] leading-relaxed mb-8">
-            Veuillez saisir le mot de passe qui vous a été transmis par l’hôte
-            pour accéder au calendrier de réservation.
+            Saisis le mot de passe qui t'a été transmis pour accéder au
+            calendrier de réservation.
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
