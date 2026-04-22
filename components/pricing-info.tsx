@@ -56,7 +56,7 @@ function PricingTable({
   rows: SeasonRow[];
 }) {
   return (
-    <div>
+    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-5 overflow-y-auto">
       <div className="flex flex-col gap-1 mb-5">
         <div className="flex items-baseline gap-2.5">
           <span className="lt-numeral">{numeral}</span>
@@ -143,7 +143,7 @@ export function PricingInfo() {
       </div>
 
       {/* Pricing tables */}
-      <div className="grid xl:grid-cols-2 gap-10 items-start">
+      <div className="grid xl:grid-cols-2 gap-5 items-start">
         <PricingTable
           numeral="§ 01"
           label="Tarifs d'été"
