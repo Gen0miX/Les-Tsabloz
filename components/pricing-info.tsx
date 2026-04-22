@@ -112,10 +112,13 @@ export function PricingInfo() {
   const [copied, setCopied] = useState(false);
 
   function copyIban() {
-    navigator.clipboard.writeText(IBAN.replace(/\s/g, "")).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    navigator.clipboard
+      .writeText(IBAN.replace(/\s/g, ""))
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {});
   }
 
   return (
