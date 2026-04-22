@@ -29,7 +29,14 @@ export function BookingCalendar({
   }))
 
   return (
-    <div className="rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-3">
+    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-5 flex flex-col gap-3.5">
+      <div className="flex items-baseline justify-between">
+        <div>
+          <span className="lt-mono">§ 01 — Dates</span>
+          <h3 className="lt-display text-[22px] mt-1.5">Choisissez vos dates</h3>
+        </div>
+      </div>
+
       <Calendar
         mode="range"
         selected={selectedRange}
@@ -42,9 +49,23 @@ export function BookingCalendar({
           booked: 'opacity-40 line-through cursor-not-allowed',
         }}
       />
-      <p className="mt-2 text-xs text-stone-400 text-center">
-        Select your check-in then check-out date
-      </p>
+
+      <hr className="border-0 h-px bg-[var(--lt-line)]" />
+
+      <div className="flex gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-[3px] bg-[var(--lt-moss)]" />
+          <span className="lt-mono">Votre sélection</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-[3px] bg-[var(--lt-surface-2)] border border-[var(--lt-line)]" />
+          <span className="lt-mono">Libre</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--lt-rust)]" />
+          <span className="lt-mono">Occupé</span>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,9 +1,8 @@
-// app/page.tsx
+// app/page.tsx — Accueil
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { TopBar } from '@/components/top-bar'
+import { TopBar } from '@/components/brand'
 import { BookingCalendar } from '@/components/booking-calendar'
 import { BookingForm } from '@/components/booking-form'
 import { BookingSuccess } from '@/components/booking-success'
@@ -23,6 +22,7 @@ export default function Home() {
   const [bookedRanges, setBookedRanges] = useState<ApprovedBooking[]>([])
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>()
   const [successBooking, setSuccessBooking] = useState<Booking | null>(null)
+  const [tab, setTab] = useState<'book' | 'cabin'>('book')
 
   function fetchBookings() {
     fetch('/api/bookings')
@@ -31,9 +31,7 @@ export default function Home() {
       .catch(console.error)
   }
 
-  useEffect(() => {
-    fetchBookings()
-  }, [])
+  useEffect(() => { fetchBookings() }, [])
 
   function handleSuccess(booking: Booking) {
     setSuccessBooking(booking)
@@ -42,32 +40,103 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-stone-900">
+    <div className="lt-root min-h-screen flex flex-col bg-[var(--lt-bg)]">
       <TopBar />
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
-        <Tabs defaultValue="book">
-          <TabsList className="mb-6 dark:bg-stone-800">
-            <TabsTrigger value="book">Book a Stay</TabsTrigger>
-            <TabsTrigger value="cabin">The Cabin</TabsTrigger>
-          </TabsList>
-          <TabsContent value="book">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <BookingCalendar
-                bookedRanges={bookedRanges}
-                selectedRange={selectedRange}
-                onSelectRange={setSelectedRange}
-              />
-              <BookingForm
-                selectedRange={selectedRange}
-                onSuccess={handleSuccess}
-              />
-            </div>
-          </TabsContent>
-          <TabsContent value="cabin">
+
+      {/* Editorial hero strip */}
+      <section className="px-10 md:px-16 pt-12 pb-8 border-b border-[var(--lt-line)] bg-[var(--lt-bg)]">
+        <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end">
+          <div>
+            <span className="lt-mono text-[var(--lt-moss)]">✦ Saison 2026 · ouverte</span>
+            <h1
+              className="lt-display mt-3.5"
+              style={{
+                fontSize: 'clamp(44px, 6vw, 72px)',
+                lineHeight: 0.95,
+                fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
+              }}
+            >
+              Réservez votre séjour
+              <br />
+              <em
+                className="not-italic text-[var(--lt-moss)]"
+                style={{
+                  fontStyle: 'italic',
+                  fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
+                }}
+              >
+                aux Tsabloz.
+              </em>
+            </h1>
+          </div>
+          <div className="pl-7 border-l border-[var(--lt-line)] self-end">
+            <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed m-0 max-w-[38ch]">
+              Choisissez vos dates sur le calendrier, remplissez le formulaire —
+              l’hôte confirme sous 24h. Un accusé de réception vous parviendra
+              par e-mail.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Tabs */}
+      <nav className="px-10 md:px-16 border-b border-[var(--lt-line)] flex gap-0.5 bg-[var(--lt-surface)]">
+        {(['book', 'cabin'] as const).map((id, i) => {
+          const label = id === 'book' ? 'Réserver un séjour' : 'Le chalet'
+          const active = tab === id
+          return (
+            <button
+              key={id}
+              onClick={() => setTab(id)}
+              className="bg-transparent border-none py-4 px-5 font-[var(--lt-font-ui)] text-sm cursor-pointer flex items-center gap-2 -mb-px"
+              style={{
+                fontWeight: active ? 600 : 400,
+                color: active ? 'var(--lt-ink)' : 'var(--lt-ink-mute)',
+                borderBottom: active
+                  ? '2px solid var(--lt-moss)'
+                  : '2px solid transparent',
+              }}
+            >
+              <span
+                className="lt-mono"
+                style={{
+                  fontSize: 9,
+                  color: active ? 'var(--lt-moss)' : 'var(--lt-ink-mute)',
+                }}
+              >
+                0{i + 1}
+              </span>
+              {label}
+            </button>
+          )
+        })}
+      </nav>
+
+      <main className="flex-1 px-10 md:px-16 py-10">
+        {tab === 'book' ? (
+          <div className="grid md:grid-cols-2 gap-7 items-start max-w-6xl mx-auto">
+            <BookingCalendar
+              bookedRanges={bookedRanges}
+              selectedRange={selectedRange}
+              onSelectRange={setSelectedRange}
+            />
+            <BookingForm
+              selectedRange={selectedRange}
+              onSuccess={handleSuccess}
+            />
+          </div>
+        ) : (
+          <div className="max-w-6xl mx-auto">
             <CabinInfo />
-          </TabsContent>
-        </Tabs>
+          </div>
+        )}
       </main>
+
+      <footer className="px-10 md:px-16 py-6 border-t border-[var(--lt-line)] flex justify-between bg-[var(--lt-surface)]">
+        <span className="lt-mono">Les Tsabloz · Val d’Anniviers · Valais</span>
+        <span className="lt-mono">Pour la famille & les amis</span>
+      </footer>
+
       <BookingSuccess
         booking={successBooking}
         onClose={() => setSuccessBooking(null)}

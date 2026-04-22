@@ -1,12 +1,14 @@
+// app/admin/login/page.tsx
 'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { LTLogo } from '@/components/brand'
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('')
@@ -33,7 +35,7 @@ export default function AdminLoginPage() {
     setLoading(false)
 
     if (authError) {
-      setError('Invalid credentials')
+      setError('Identifiants invalides')
       return
     }
 
@@ -42,48 +44,90 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-stone-50 dark:bg-stone-900 p-4">
+    <div className="lt-root min-h-screen flex items-center justify-center bg-[var(--lt-bg)] p-10 relative">
+      <div
+        className="absolute top-0 left-0 right-0 h-[180px] border-b border-[var(--lt-line)] pointer-events-none"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(135deg, transparent 0 14px, oklch(from var(--lt-moss) l c h / 0.08) 14px 15px)',
+        }}
+      />
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <Card className="w-full max-w-sm border-stone-200 dark:border-stone-700 dark:bg-stone-800">
-        <CardHeader className="text-center pb-2">
-          <h1 className="font-serif text-2xl text-stone-900 dark:text-stone-100">
-            Admin
+
+      <div className="w-full max-w-[400px] relative z-10">
+        <div className="text-center mb-7">
+          <div className="inline-flex text-[var(--lt-moss)] mb-4">
+            <LTLogo size={32} />
+          </div>
+          <span className="lt-mono text-[var(--lt-moss)]">
+            Espace administrateur
+          </span>
+          <h1 className="lt-display text-[40px] mt-2.5 text-[var(--lt-ink)]">
+            Gestion
           </h1>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoFocus
-              className="dark:bg-stone-700 dark:border-stone-600"
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="dark:bg-stone-700 dark:border-stone-600"
-            />
-            {error && (
-              <p className="text-sm text-red-500 dark:text-red-400">{error}</p>
-            )}
-            <Button
-              type="submit"
-              disabled={loading}
-              className="bg-[#7C9A7E] hover:bg-[#6a8a6c] text-white dark:bg-[#8FAF91] dark:hover:bg-[#7C9A7E] dark:text-stone-900"
+        </div>
+
+        <Card className="p-8 border-[var(--lt-line)] bg-[var(--lt-surface)]">
+          <CardContent className="p-0">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4"
             >
-              {loading ? 'Signing in…' : 'Sign In'}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <div>
+                <label className="lt-label">E-mail</label>
+                <Input
+                  type="email"
+                  placeholder="admin@tsabloz.ch"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="lt-label">Mot de passe</label>
+                <Input
+                  type="password"
+                  placeholder="••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              {error && (
+                <p className="text-sm text-[var(--lt-rust)]">{error}</p>
+              )}
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="mt-1.5 bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+              >
+                {loading ? 'Connexion…' : 'Accéder au tableau de bord'}
+              </Button>
+            </form>
+
+            <div className="mt-5 pt-4 border-t border-[var(--lt-line-soft)] flex items-center gap-2.5">
+              <div className="w-6 h-px bg-[var(--lt-line)]" />
+              <span className="lt-mono text-[10px]">
+                Accès réservé aux hôtes
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="text-center mt-5">
+          <a
+            href="/"
+            className="text-[13px] text-[var(--lt-ink-mute)] no-underline"
+          >
+            ← Retour au site
+          </a>
+        </div>
+      </div>
     </div>
   )
 }

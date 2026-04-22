@@ -2,23 +2,25 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import type { Booking, BookingStatus } from '@/types/booking'
-
-const statusStyle: Record<BookingStatus, string> = {
-  pending:
-    'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-  approved:
-    'bg-[#7C9A7E]/20 text-[#5a7a5c] dark:bg-[#8FAF91]/20 dark:text-[#8FAF91]',
-  rejected:
-    'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300',
-}
+import { StatusBadge } from '@/components/brand'
+import type { Booking } from '@/types/booking'
 
 interface BookingCardProps {
   booking: Booking
   onStatusChange: (id: string, status: 'approved' | 'rejected') => void
+}
+
+const STATUS_BORDER = {
+  pending: 'var(--lt-amber)',
+  approved: 'var(--lt-moss)',
+  rejected: 'var(--lt-rust)',
+} as const
+
+function nightsBetween(a: string, b: string) {
+  const d1 = new Date(a + 'T00:00:00')
+  const d2 = new Date(b + 'T00:00:00')
+  return Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
 }
 
 export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
@@ -32,54 +34,76 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
       body: JSON.stringify({ status }),
     })
     setLoading(null)
-    if (res.ok) {
-      onStatusChange(booking.id, status)
-    }
+    if (res.ok) onStatusChange(booking.id, status)
   }
 
+  const nights = nightsBetween(booking.start_date, booking.end_date)
+
   return (
-    <Card className="border-stone-200 dark:border-stone-700 dark:bg-stone-800">
-      <CardContent className="pt-4 flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex flex-col gap-0.5">
-            <p className="font-medium text-stone-900 dark:text-stone-100">
-              {booking.name}
-            </p>
-            <p className="text-sm text-stone-500 dark:text-stone-400">
-              {booking.email}
-            </p>
-            <p className="text-sm text-stone-700 dark:text-stone-300 mt-1">
-              {booking.start_date} → {booking.end_date}
-            </p>
-            {booking.message && (
-              <p className="text-sm text-stone-500 dark:text-stone-400 italic mt-1">
-                "{booking.message}"
-              </p>
-            )}
+    <div
+      className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-[18px] flex flex-col gap-3"
+      style={{ borderLeft: `3px solid ${STATUS_BORDER[booking.status]}` }}
+    >
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2.5 mb-1">
+            <span className="lt-mono">#{booking.id.slice(0, 6)}</span>
           </div>
-          <Badge className={statusStyle[booking.status]}>{booking.status}</Badge>
+          <div className="lt-display text-[19px] text-[var(--lt-ink)]">
+            {booking.name}
+          </div>
+          <div className="text-[13px] text-[var(--lt-ink-soft)] mt-0.5">
+            {booking.email}
+          </div>
         </div>
-        {booking.status === 'pending' && (
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              onClick={() => handleAction('approved')}
-              disabled={!!loading}
-              className="bg-[#7C9A7E] hover:bg-[#6a8a6c] text-white dark:bg-[#8FAF91] dark:hover:bg-[#7C9A7E] dark:text-stone-900"
-            >
-              {loading === 'approved' ? 'Approving…' : 'Approve'}
-            </Button>
-            <Button
-              size="sm"
-              variant="destructive"
-              onClick={() => handleAction('rejected')}
-              disabled={!!loading}
-            >
-              {loading === 'rejected' ? 'Rejecting…' : 'Reject'}
-            </Button>
+        <StatusBadge status={booking.status} />
+      </div>
+
+      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
+        <div>
+          <span className="lt-mono">Du</span>
+          <div className="text-[14.5px] mt-0.5">{booking.start_date}</div>
+        </div>
+        <div className="flex-1 flex items-center">
+          <div className="flex-1 h-px bg-[var(--lt-line)] relative">
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[var(--lt-surface-2)] px-2 font-mono text-[10px] text-[var(--lt-moss)]">
+              {nights} nuits
+            </span>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+        <div className="text-right">
+          <span className="lt-mono">Au</span>
+          <div className="text-[14.5px] mt-0.5">{booking.end_date}</div>
+        </div>
+      </div>
+
+      {booking.message && (
+        <div className="text-[13.5px] text-[var(--lt-ink-soft)] italic border-l-2 border-[var(--lt-line)] pl-3 leading-relaxed">
+          « {booking.message} »
+        </div>
+      )}
+
+      {booking.status === 'pending' && (
+        <div className="flex gap-2 mt-0.5">
+          <Button
+            size="sm"
+            onClick={() => handleAction('approved')}
+            disabled={!!loading}
+            className="bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+          >
+            {loading === 'approved' ? 'Validation…' : '✓ Accepter'}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => handleAction('rejected')}
+            disabled={!!loading}
+            className="text-[var(--lt-rust)] border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-[var(--lt-rust-soft)]"
+          >
+            {loading === 'rejected' ? 'Refus…' : '✕ Refuser'}
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }

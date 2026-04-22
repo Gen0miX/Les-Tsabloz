@@ -1,62 +1,94 @@
-const HOUSE_RULES = [
-  'No smoking inside the cabin',
-  'Pets welcome with prior approval',
-  'Maximum 6 guests',
-  'Check-in from 15:00, check-out by 11:00',
-  'Please leave the cabin as you found it',
-  'Quiet hours from 22:00 to 08:00',
-]
+// components/cabin-info.tsx
+import { Placeholder } from '@/components/brand'
 
-const PHOTOS = [
-  { alt: 'Exterior' },
-  { alt: 'Living room' },
-  { alt: 'Bedroom' },
-  { alt: 'Kitchen' },
+const HOUSE_RULES: [string, string][] = [
+  ['Arrivée', 'à partir de 15h00'],
+  ['Départ', 'avant 11h00'],
+  ['Capacité', 'jusqu’à 6 personnes'],
+  ['Animaux', 'acceptés sur accord préalable'],
+  ['Tabac', 'interdit à l’intérieur du chalet'],
+  ['Calme', 'silence de 22h00 à 08h00'],
 ]
 
 export function CabinInfo() {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {PHOTOS.map((photo) => (
-          <div
-            key={photo.alt}
-            className="aspect-square relative rounded-md overflow-hidden bg-stone-200 dark:bg-stone-700 flex items-center justify-center"
-          >
-            <span className="text-xs text-stone-400">{photo.alt}</span>
+    <div className="flex flex-col gap-11">
+      {/* Asymmetric gallery */}
+      <div
+        className="grid gap-2.5"
+        style={{
+          gridTemplateColumns: '1.6fr 1fr',
+          gridTemplateRows: '200px 200px',
+        }}
+      >
+        <Placeholder label="01 · extérieur du chalet" className="row-span-2 h-full" />
+        <Placeholder label="02 · séjour" className="h-full" />
+        <Placeholder label="03 · chambre" className="h-full" />
+      </div>
+      <div className="grid grid-cols-3 gap-2.5">
+        <Placeholder label="04 · cuisine" className="h-[140px]" />
+        <Placeholder label="05 · terrasse" className="h-[140px]" />
+        <Placeholder label="06 · vue" className="h-[140px]" />
+      </div>
+
+      <div className="grid md:grid-cols-[1fr_1.3fr] gap-14 items-start">
+        <div>
+          <div className="flex flex-col gap-2 mb-4">
+            <div className="flex items-baseline gap-2.5">
+              <span className="lt-numeral">✦</span>
+              <span className="lt-mono">Le lieu</span>
+            </div>
+            <h2 className="lt-display text-[28px] m-0 text-[var(--lt-ink)]">
+              Un refuge boisé, ancré dans la montagne.
+            </h2>
           </div>
-        ))}
-      </div>
+          <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed max-w-[42ch]">
+            Les Tsabloz est un chalet familial niché à 1 412 mètres, au cœur du
+            Val d’Anniviers. Construit en mélèze local, il accueille jusqu’à six
+            voyageurs en quête de silence, de sentiers et d’étoiles visibles.
+          </p>
+          <div className="flex gap-6 mt-6 pt-5 border-t border-[var(--lt-line)]">
+            {[
+              ['6', 'voyageurs'],
+              ['2', 'chambres'],
+              ['1 412', 'mètres'],
+            ].map(([n, l]) => (
+              <div key={l}>
+                <div className="lt-display text-[28px] text-[var(--lt-moss)]">{n}</div>
+                <span className="lt-mono">{l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      <div>
-        <h2 className="font-serif text-2xl text-stone-900 dark:text-stone-100 mb-3">
-          About the Cabin
-        </h2>
-        <p className="text-stone-600 dark:text-stone-400 leading-relaxed max-w-prose">
-          Les Tsabloz is a private cabin nestled in the mountains — a peaceful
-          retreat surrounded by nature with all the comforts of home. Perfect
-          for families, couples, or a small group of friends seeking calm and
-          clean mountain air.
-        </p>
-      </div>
-
-      <div>
-        <h2 className="font-serif text-2xl text-stone-900 dark:text-stone-100 mb-3">
-          House Rules
-        </h2>
-        <ul className="flex flex-col gap-2">
-          {HOUSE_RULES.map((rule) => (
-            <li
-              key={rule}
-              className="flex items-start gap-2 text-stone-600 dark:text-stone-400"
-            >
-              <span className="mt-0.5 text-[#7C9A7E] dark:text-[#8FAF91] select-none">
-                —
-              </span>
-              {rule}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <div className="flex flex-col gap-2 mb-4">
+            <div className="flex items-baseline gap-2.5">
+              <span className="lt-numeral">§ 07</span>
+              <span className="lt-mono">Règles de vie</span>
+            </div>
+            <h2 className="lt-display text-[28px] m-0 text-[var(--lt-ink)]">
+              Quelques principes simples.
+            </h2>
+          </div>
+          <ul className="list-none p-0 m-0 flex flex-col">
+            {HOUSE_RULES.map(([k, v], i) => (
+              <li
+                key={k}
+                className="grid grid-cols-[110px_1fr] py-3.5 items-baseline gap-5"
+                style={{
+                  borderTop:
+                    i === 0 ? 'none' : '1px solid var(--lt-line-soft)',
+                }}
+              >
+                <span className="lt-mono text-[var(--lt-moss)]">
+                  {String(i + 1).padStart(2, '0')} · {k}
+                </span>
+                <span className="text-[var(--lt-ink)] text-[15px]">{v}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )

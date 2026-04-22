@@ -1,11 +1,12 @@
+// app/login/page.tsx — Guest password login
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LTWordmark } from "@/components/brand";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ export default function LoginPage() {
     setLoading(false);
 
     if (!res.ok) {
-      setError("Incorrect password. Try again.");
+      setError("Mot de passe incorrect.");
       return;
     }
 
@@ -36,44 +37,98 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-stone-50 dark:bg-stone-900 p-4">
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
-      <Card className="w-full max-w-sm border-stone-200 dark:border-stone-700 dark:bg-stone-800">
-        <CardHeader className="text-center space-y-1 pb-2">
-          <h1 className="font-serif text-3xl text-stone-900 dark:text-stone-100">
-            Les Tsabloz
+    <div className="lt-root min-h-screen grid grid-cols-1 md:grid-cols-[1.1fr_1fr] bg-[var(--lt-bg)]">
+      {/* Left — editorial */}
+      <div className="relative p-10 md:p-14 flex flex-col justify-between border-r border-[var(--lt-line)]">
+        <div className="mb-10 md:mb-0">
+          <LTWordmark />
+        </div>
+
+        <div>
+          <span className="lt-mono text-[var(--lt-moss)]">✦ Accès privé</span>
+          <h1
+            className="lt-display mt-4 text-[var(--lt-ink)]"
+            style={{
+              fontSize: "clamp(56px, 9vw, 96px)",
+              lineHeight: 0.94,
+              fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
+            }}
+          >
+            Les
+            <br />
+            <em
+              className="not-italic text-[var(--lt-moss)]"
+              style={{
+                fontStyle: "italic",
+                fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
+              }}
+            >
+              Tsabloz
+            </em>
           </h1>
-          <p className="text-sm text-stone-500 dark:text-stone-400">
-            Un mot de passe est nécessaire pour accéder à ce site. Veuillez le
-            saisir ci-dessous.
+          <p className="text-[var(--lt-ink-soft)] mt-5 mb-5 max-w-[40ch] text-[15px] leading-relaxed">
+            Un refuge boisé blotti au creux du Val d’Anniviers. Réservé à la
+            famille et aux amis proches.
           </p>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <Input
-              type="password"
-              placeholder="Mot de passe"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoFocus
-              className="dark:bg-stone-700 dark:border-stone-600"
-            />
-            {error && (
-              <p className="text-sm text-red-500 dark:text-red-400">{error}</p>
-            )}
+        </div>
+
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-px bg-[var(--lt-moss)]" />
+          <span className="lt-mono">
+            46°15'01.28″N · 7°30'36.31″E — 1 211 m
+          </span>
+        </div>
+      </div>
+
+      {/* Right — form */}
+      <div className="relative p-10 md:p-14 flex flex-col justify-center bg-[var(--lt-surface)]">
+        <div className="absolute top-4 right-5">
+          <ThemeToggle />
+        </div>
+        <div className="max-w-[380px] w-full mx-auto">
+          <span className="lt-mono">01 — Entrée</span>
+          <h2 className="lt-display text-[38px] mt-3 mb-1.5">Bienvenue</h2>
+          <p className="text-[var(--lt-ink-soft)] text-[14.5px] leading-relaxed mb-8">
+            Veuillez saisir le mot de passe qui vous a été transmis par l’hôte
+            pour accéder au calendrier de réservation.
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div>
+              <label className="lt-label">Mot de passe</label>
+              <Input
+                type="password"
+                placeholder="••••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
+
+            {error && <p className="text-sm text-[var(--lt-rust)]">{error}</p>}
+
             <Button
               type="submit"
               disabled={loading}
-              className="bg-[#7C9A7E] hover:bg-[#6a8a6c] text-white dark:bg-[#8FAF91] dark:hover:bg-[#7C9A7E] dark:text-stone-900"
+              className="mt-1.5 bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
             >
-              {loading ? "Checking…" : "Continuer vers le site"}
+              {loading ? "Vérification…" : "Entrer dans le chalet →"}
             </Button>
+
+            <div className="mt-6 pt-5 border-t border-[var(--lt-line)] flex justify-between items-center">
+              <span className="lt-mono">Pas de mot de passe ?</span>
+              <a className="text-[13px] text-[var(--lt-moss)] font-medium no-underline">
+                Contacter l’hôte
+              </a>
+            </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="absolute bottom-6 right-7">
+          <span className="lt-mono">v1 · 2026</span>
+        </div>
+      </div>
     </div>
   );
 }
