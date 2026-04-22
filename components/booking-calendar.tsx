@@ -1,18 +1,18 @@
 // components/booking-calendar.tsx
-'use client'
+"use client";
 
-import { Calendar } from '@/components/ui/calendar'
-import type { DateRange } from 'react-day-picker'
+import { Calendar } from "@/components/ui/calendar";
+import type { DateRange } from "react-day-picker";
 
 interface BookedRange {
-  start_date: string
-  end_date: string
+  start_date: string;
+  end_date: string;
 }
 
 interface BookingCalendarProps {
-  bookedRanges: BookedRange[]
-  selectedRange: DateRange | undefined
-  onSelectRange: (range: DateRange | undefined) => void
+  bookedRanges: BookedRange[];
+  selectedRange: DateRange | undefined;
+  onSelectRange: (range: DateRange | undefined) => void;
 }
 
 export function BookingCalendar({
@@ -20,20 +20,22 @@ export function BookingCalendar({
   selectedRange,
   onSelectRange,
 }: BookingCalendarProps) {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const disabledDates = bookedRanges.map((r) => ({
-    from: new Date(r.start_date + 'T00:00:00'),
-    to: new Date(r.end_date + 'T00:00:00'),
-  }))
+    from: new Date(r.start_date + "T00:00:00"),
+    to: new Date(r.end_date + "T00:00:00"),
+  }));
 
   return (
-    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-5 flex flex-col gap-3.5">
+    <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 flex flex-col gap-3.5">
       <div className="flex items-baseline justify-between">
         <div>
           <span className="lt-mono">§ 01 — Dates</span>
-          <h3 className="lt-display text-[22px] mt-1.5">Choisissez vos dates</h3>
+          <h3 className="lt-display text-[22px] mt-1.5">
+            Choisissez vos dates
+          </h3>
         </div>
       </div>
 
@@ -46,26 +48,26 @@ export function BookingCalendar({
         className="w-full"
         modifiers={{ booked: disabledDates }}
         modifiersClassNames={{
-          booked: 'opacity-40 line-through cursor-not-allowed',
+          booked: "opacity-40 line-through cursor-not-allowed",
         }}
       />
 
-      <hr className="border-0 h-px bg-[var(--lt-line)]" />
+      <hr className="border-0 h-px bg-(--lt-line)" />
 
       <div className="flex gap-4 flex-wrap">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-[3px] bg-[var(--lt-moss)]" />
+          <span className="w-2.5 h-2.5 rounded-[3px] bg-(--lt-moss)" />
           <span className="lt-mono">Votre sélection</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-[3px] bg-[var(--lt-surface-2)] border border-[var(--lt-line)]" />
+          <span className="w-2.5 h-2.5 rounded-[3px] bg-(--lt-surface-2) border border-(--lt-line)" />
           <span className="lt-mono">Libre</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--lt-rust)]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-(--lt-rust)" />
           <span className="lt-mono">Occupé</span>
         </div>
       </div>
     </div>
-  )
+  );
 }

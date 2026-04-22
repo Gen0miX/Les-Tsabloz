@@ -55,14 +55,14 @@ export default function Home() {
   }
 
   return (
-    <div className="lt-root min-h-screen flex flex-col bg-[var(--lt-bg)]">
+    <div className="lt-root min-h-screen flex flex-col bg-(--lt-bg)">
       <TopBar />
 
       {/* Editorial hero strip */}
-      <section className="px-10 md:px-16 pt-12 pb-8 border-b border-[var(--lt-line)] bg-[var(--lt-bg)]">
+      <section className="px-10 md:px-16 pt-12 pb-8 border-b border-(--lt-line) bg-(--lt-bg)">
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end">
           <div>
-            <span className="lt-mono text-[var(--lt-moss)]">
+            <span className="lt-mono text-(--lt-moss)">
               ✦ Saison {new Date().getFullYear()} · ouverte
             </span>
             <h1
@@ -86,8 +86,8 @@ export default function Home() {
               </em>
             </h1>
           </div>
-          <div className="pl-7 border-l border-[var(--lt-line)] self-end">
-            <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed m-0 max-w-[38ch]">
+          <div className="pl-7 border-l border-(--lt-line) self-end">
+            <p className="text-(--lt-ink-soft) text-[15px] leading-relaxed m-0 max-w-[38ch]">
               Choisis tes dates sur le calendrier, remplis le formulaire — ta
               réservation devra ensuite être confirmée. <br /> Tu recevras la
               confirmation par e-mail.
@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* Tabs */}
-      <nav className="px-10 md:px-16 border-b border-[var(--lt-line)] flex gap-0.5 bg-[var(--lt-surface)]">
+      <nav className="px-10 md:px-16 border-b border-(--lt-line) flex gap-0.5 bg-(--lt-surface)">
         {(
           [
             { id: "book", label: "Réserver un séjour" },
@@ -110,7 +110,7 @@ export default function Home() {
             <button
               key={id}
               onClick={() => handleTabChange(id)}
-              className="bg-transparent border-none py-4 px-5 font-[var(--lt-font-ui)] text-sm cursor-pointer flex items-center gap-2 -mb-px"
+              className="bg-transparent border-none py-4 px-5 font-(--lt-font-ui) text-sm cursor-pointer flex items-center gap-2 -mb-px"
               style={{
                 fontWeight: active ? 600 : 400,
                 color: active ? "var(--lt-ink)" : "var(--lt-ink-mute)",
@@ -156,7 +156,7 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="px-10 md:px-16 py-6 border-t border-[var(--lt-line)] flex justify-between bg-[var(--lt-surface)]">
+      <footer className="px-10 md:px-16 py-6 border-t border-(--lt-line) flex justify-between bg-(--lt-surface)">
         <span className="lt-mono">Les Tsabloz · Vercorin · Valais</span>
         <span className="lt-mono">Pour la famille & les amis</span>
       </footer>

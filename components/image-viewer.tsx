@@ -36,7 +36,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
     (dir: number) => {
       setIndex((i) => (i + dir + images.length) % images.length);
     },
-    [images.length]
+    [images.length],
   );
 
   React.useEffect(() => {
@@ -159,7 +159,8 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
                     style={{
                       opacity: active ? 1 : 0,
                       transform: `translateX(${tx}) scale(${active ? 1 : 0.94})`,
-                      willChange: active || prev || next ? "transform, opacity" : "auto",
+                      willChange:
+                        active || prev || next ? "transform, opacity" : "auto",
                       pointerEvents: active ? "auto" : "none",
                     }}
                   >
@@ -205,7 +206,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
                   "relative flex-none w-21 h-14 rounded-md overflow-hidden border-2 border-transparent bg-muted cursor-pointer transition",
                   i === index
                     ? "is-active opacity-100 border-white"
-                    : "opacity-55 hover:opacity-90 hover:-translate-y-0.5"
+                    : "opacity-55 hover:opacity-90 hover:-translate-y-0.5",
                 )}
                 style={{ width: 84, height: 56 }}
               >
@@ -239,8 +240,8 @@ function MediaFrame({ img }: { img: ViewerImage }) {
   return (
     <div
       className={cn(
-        "relative w-[min(1100px,100%)] aspect-[16/10] rounded-2xl overflow-hidden bg-muted",
-        "shadow-[0_20px_60px_-20px_rgba(0,0,0,0.55),0_4px_20px_-4px_rgba(0,0,0,0.3)]"
+        "relative w-[min(1100px,100%)] aspect-16/10 rounded-2xl overflow-hidden bg-muted",
+        "shadow-[0_20px_60px_-20px_rgba(0,0,0,0.55),0_4px_20px_-4px_rgba(0,0,0,0.3)]",
       )}
     >
       {img.src ? (
@@ -263,7 +264,7 @@ function MediaFrame({ img }: { img: ViewerImage }) {
         <span className="font-mono text-[10.5px] tracking-widest uppercase text-white/60">
           {img.num ?? ""}
         </span>
-        <span className="font-heading text-[18px] -tracking-[0.01em]">
+        <span className="font-heading text-[18px] tracking-[-0.01em]">
           {img.label}
         </span>
       </div>

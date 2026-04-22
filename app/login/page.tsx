@@ -37,17 +37,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="lt-root min-h-screen grid grid-cols-1 md:grid-cols-[1.1fr_1fr] bg-[var(--lt-bg)]">
+    <div className="lt-root min-h-screen grid grid-cols-1 md:grid-cols-[1.1fr_1fr] bg-(--lt-bg)">
       {/* Left — editorial */}
-      <div className="relative p-10 md:p-14 flex flex-col justify-between border-r border-[var(--lt-line)]">
+      <div className="relative p-10 md:p-14 flex flex-col justify-between border-r border-(--lt-line)">
         <div className="mb-10 md:mb-0">
           <LTWordmark />
         </div>
 
         <div>
-          <span className="lt-mono text-[var(--lt-moss)]">✦ Accès privé</span>
+          <span className="lt-mono text-(--lt-moss)">✦ Accès privé</span>
           <h1
-            className="lt-display mt-4 text-[var(--lt-ink)]"
+            className="lt-display mt-4 text-(--lt-ink)"
             style={{
               fontSize: "clamp(56px, 9vw, 96px)",
               lineHeight: 0.94,
@@ -57,7 +57,7 @@ export default function LoginPage() {
             Les
             <br />
             <em
-              className="not-italic text-[var(--lt-moss)]"
+              className="not-italic text-(--lt-moss)"
               style={{
                 fontStyle: "italic",
                 fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
@@ -66,14 +66,14 @@ export default function LoginPage() {
               Tsabloz
             </em>
           </h1>
-          <p className="text-[var(--lt-ink-soft)] mt-5 mb-5 max-w-[40ch] text-[15px] leading-relaxed">
+          <p className="text-(--lt-ink-soft) mt-5 mb-5 max-w-[40ch] text-[15px] leading-relaxed">
             Un vieux mayen perché près de Vercorin, rien que pour la famille et
             les amis.
           </p>
         </div>
 
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-px bg-[var(--lt-moss)]" />
+          <div className="w-12 h-px bg-(--lt-moss)" />
           <span className="lt-mono">
             46°15'01.28″N · 7°30'36.31″E — 1 211 m
           </span>
@@ -81,14 +81,14 @@ export default function LoginPage() {
       </div>
 
       {/* Right — form */}
-      <div className="relative p-10 md:p-14 flex flex-col justify-center bg-[var(--lt-surface)]">
+      <div className="relative p-10 md:p-14 flex flex-col justify-center bg-(--lt-surface)">
         <div className="absolute top-4 right-5">
           <ThemeToggle />
         </div>
         <div className="max-w-[380px] w-full mx-auto">
           <span className="lt-mono">01 — Entrée</span>
           <h2 className="lt-display text-[38px] mt-3 mb-1.5">Bienvenue</h2>
-          <p className="text-[var(--lt-ink-soft)] text-[14.5px] leading-relaxed mb-8">
+          <p className="text-(--lt-ink-soft) text-[14.5px] leading-relaxed mb-8">
             Saisis le mot de passe qui t'a été transmis pour accéder au
             calendrier de réservation.
           </p>
@@ -106,19 +106,19 @@ export default function LoginPage() {
               />
             </div>
 
-            {error && <p className="text-sm text-[var(--lt-rust)]">{error}</p>}
+            {error && <p className="text-sm text-(--lt-rust)">{error}</p>}
 
             <Button
               type="submit"
               disabled={loading}
-              className="mt-1.5 bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+              className="mt-1.5 bg-(--lt-moss) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
             >
               {loading ? "Vérification…" : "Entrer dans le chalet →"}
             </Button>
 
-            <div className="mt-6 pt-5 border-t border-[var(--lt-line)] flex justify-between items-center">
+            <div className="mt-6 pt-5 border-t border-(--lt-line) flex justify-between items-center">
               <span className="lt-mono">Pas de mot de passe ?</span>
-              <a className="text-[13px] text-[var(--lt-moss)] font-medium no-underline">
+              <a className="text-[13px] text-(--lt-moss) font-medium no-underline">
                 Contacter l’hôte
               </a>
             </div>

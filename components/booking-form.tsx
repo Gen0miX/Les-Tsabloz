@@ -99,7 +99,7 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
   const toF = selectedRange?.to ? formatLong(selectedRange.to) : null;
 
   return (
-    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-5 flex flex-col gap-4">
+    <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 flex flex-col gap-4">
       <div>
         <span className="lt-mono">§ 02 — Vos informations</span>
         <h3 className="lt-display text-[22px] mt-1.5">Demande de séjour</h3>
@@ -112,16 +112,14 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
         ].map(([label, f]) => (
           <div
             key={label as string}
-            className="p-3 border border-dashed border-[var(--lt-moss)] rounded-[var(--lt-radius)]"
+            className="p-3 border border-dashed border-(--lt-moss) rounded-(--lt-radius)"
             style={{ background: "oklch(from var(--lt-moss) l c h / 0.06)" }}
           >
-            <span className="lt-mono text-[var(--lt-moss)]">
-              {label as string}
-            </span>
+            <span className="lt-mono text-(--lt-moss)">{label as string}</span>
             <div className="lt-display text-[20px] mt-0.5">
               {f ? (f as { day: string }).day : "—"}
             </div>
-            <span className="text-[11px] text-[var(--lt-ink-mute)]">
+            <span className="text-[11px] text-(--lt-ink-mute)">
               {f ? (f as { dow: string }).dow : "Sélectionnez une date"}
             </span>
           </div>
@@ -129,10 +127,10 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
       </div>
 
       {nights > 0 && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-[var(--lt-surface-2)] rounded-md">
-          <span className="text-[var(--lt-moss)]">◦</span>
-          <span className="text-[12.5px] text-[var(--lt-ink-soft)]">
-            <strong className="text-[var(--lt-ink)]">{nights} nuits</strong> · 2
+        <div className="flex items-center gap-2 px-3 py-2 bg-(--lt-surface-2) rounded-md">
+          <span className="text-(--lt-moss)">◦</span>
+          <span className="text-[12.5px] text-(--lt-ink-soft)">
+            <strong className="text-(--lt-ink)">{nights} nuits</strong> · 2
             chambres · jusqu’à 6 personnes
           </span>
         </div>
@@ -169,21 +167,21 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
         </div>
 
         {!startDate && (
-          <p className="text-sm text-[var(--lt-ink-mute)]">
+          <p className="text-sm text-(--lt-ink-mute)">
             Sélectionnez vos dates sur le calendrier pour continuer
           </p>
         )}
-        {error && <p className="text-sm text-[var(--lt-rust)]">{error}</p>}
+        {error && <p className="text-sm text-(--lt-rust)">{error}</p>}
 
         <Button
           type="submit"
           disabled={loading || !canSubmit}
-          className="mt-1 bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+          className="mt-1 bg-(--lt-moss) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
         >
           {loading ? "Envoi…" : "Envoyer la demande"}
         </Button>
 
-        <p className="m-0 text-[12px] text-[var(--lt-ink-mute)] leading-relaxed">
+        <p className="m-0 text-[12px] text-(--lt-ink-mute) leading-relaxed">
           Votre demande sera examinée. Aucun paiement n’est requis à ce stade.
         </p>
       </form>

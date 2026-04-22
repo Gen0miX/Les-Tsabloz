@@ -39,15 +39,13 @@ export function LTLogo({ size = 24 }: { size?: number }) {
 export function LTWordmark({ subtle = false }: { subtle?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <span className="text-[var(--lt-moss)] flex">
+      <span className="text-(--lt-moss) flex">
         <LTLogo size={22} />
       </span>
       <div className="flex flex-col leading-none">
-        <span className="lt-display text-lg text-[var(--lt-ink)]">
-          Les Tsabloz
-        </span>
+        <span className="lt-display text-lg text-(--lt-ink)">Les Tsabloz</span>
         {!subtle && (
-          <span className="lt-mono mt-[3px] text-[9px]">Vercorin · Valais</span>
+          <span className="lt-mono mt-0.75 text-[9px]">Vercorin · Valais</span>
         )}
       </div>
     </div>
@@ -71,7 +69,7 @@ export function TopBar({
   }
 
   return (
-    <header className="flex items-center justify-between px-7 py-4 border-b border-[var(--lt-line)] bg-[var(--lt-surface)]">
+    <header className="flex items-center justify-between px-7 py-4 border-b border-(--lt-line) bg-(--lt-surface)">
       <LTWordmark subtle={admin} />
       <div className="flex items-center gap-1.5">
         {admin && <span className="lt-mono mr-3">— Espace admin</span>}
@@ -80,7 +78,7 @@ export function TopBar({
           variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="text-[var(--lt-ink-soft)]"
+          className="text-(--lt-ink-soft)"
         >
           Déconnexion
         </Button>

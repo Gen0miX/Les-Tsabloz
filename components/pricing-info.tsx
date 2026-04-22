@@ -56,7 +56,7 @@ function PricingTable({
   rows: SeasonRow[];
 }) {
   return (
-    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-5 overflow-y-auto">
+    <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 overflow-y-auto">
       <div className="flex flex-col gap-1 mb-5">
         <div className="flex items-baseline gap-2.5">
           <span className="lt-numeral">{numeral}</span>
