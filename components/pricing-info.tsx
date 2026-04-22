@@ -2,6 +2,14 @@
 "use client";
 
 import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const IBAN = "CH03 8060 6000 0003 9698 6";
 
@@ -52,58 +60,54 @@ function PricingTable({
       <div className="flex flex-col gap-1 mb-5">
         <div className="flex items-baseline gap-2.5">
           <span className="lt-numeral">{numeral}</span>
+
           <span className="lt-mono">{label}</span>
         </div>
-        <span className="lt-mono text-[var(--lt-ink-mute)]">{range}</span>
+        <h2 className="lt-display text-[22px] m-0 text-(--lt-ink)">{range}</h2>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="lt-mono text-[9px] text-[var(--lt-moss)] text-left py-2 pr-4 font-normal whitespace-nowrap">
-                Pers.
-              </th>
-              {COLS.map((col, i) => (
-                <th
-                  key={col}
-                  className="lt-mono text-[9px] text-[var(--lt-moss)] text-right py-2 pl-4 whitespace-nowrap"
-                  style={{ fontWeight: i === 5 ? 600 : 400 }}
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, ri) => (
-              <tr
-                key={row.persons}
-                style={{
-                  borderTop:
-                    ri === 0 ? "none" : "1px solid var(--lt-line-soft)",
-                }}
+      <Table>
+        <TableHeader>
+          <TableRow className="border-b-0 hover:bg-transparent">
+            <TableHead className="lt-mono text-[9px] text-(--lt-moss) py-2 pr-4 pl-0 h-auto font-normal">
+              Pers.
+            </TableHead>
+            {COLS.map((col, i) => (
+              <TableHead
+                key={col}
+                className="lt-mono text-[9px] text-(--lt-moss) text-right py-2 pl-4 pr-0 h-auto"
+                style={{ fontWeight: i === 5 ? 600 : 400 }}
               >
-                <td className="lt-mono text-[var(--lt-moss)] py-3 pr-4 text-sm whitespace-nowrap">
-                  {row.persons} pers.
-                </td>
-                {row.nights.map((val, ci) => (
-                  <td
-                    key={ci}
-                    className="py-3 pl-4 text-right text-[15px] whitespace-nowrap"
-                    style={{
-                      color:
-                        val === null ? "var(--lt-ink-mute)" : "var(--lt-ink)",
-                      fontWeight: ci === 5 ? 600 : 400,
-                    }}
-                  >
-                    {val === null ? "—" : `${val} CHF`}
-                  </td>
-                ))}
-              </tr>
+                {col}
+              </TableHead>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.persons}
+              className="border-b border-(--lt-line-soft) last:border-0 hover:bg-transparent"
+            >
+              <TableCell className="lt-mono text-(--lt-moss) py-3 pr-4 pl-0 text-sm">
+                {row.persons} pers.
+              </TableCell>
+              {row.nights.map((val, ci) => (
+                <TableCell
+                  key={ci}
+                  className="py-3 pl-4 pr-0 text-right text-[15px]"
+                  style={{
+                    color:
+                      val === null ? "var(--lt-ink-mute)" : "var(--lt-ink)",
+                    fontWeight: ci === 5 ? 600 : 400,
+                  }}
+                >
+                  {val === null ? "—" : `${val} .-`}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
@@ -125,20 +129,21 @@ export function PricingInfo() {
     <div className="flex flex-col gap-11 max-w-6xl mx-auto">
       {/* Editorial header */}
       <div className="flex flex-col gap-2">
-        <span className="lt-mono text-[var(--lt-moss)]">✦ Tarifs · Saison 2026</span>
+        <span className="lt-mono text-(--lt-moss)">✦ Tarifs · Saison 2026</span>
         <h2
-          className="lt-display m-0 text-[var(--lt-ink)]"
+          className="lt-display m-0 text-(--lt-ink)"
           style={{ fontSize: "clamp(32px, 4vw, 48px)", lineHeight: 0.95 }}
         >
           Ce que coûte un séjour.
         </h2>
-        <p className="lt-mono text-[var(--lt-ink-mute)] m-0 text-sm">
-          Les enfants de moins de 12 ans ne sont pas comptabilisés. Tarifs en CHF.
+        <p className="lt-mono text-(--lt-ink-mute) m-0 text-sm">
+          Les enfants de moins de 12 ans ne sont pas comptabilisés. Tarifs en
+          CHF.
         </p>
       </div>
 
       {/* Pricing tables */}
-      <div className="grid md:grid-cols-2 gap-10 items-start">
+      <div className="grid xl:grid-cols-2 gap-10 items-start">
         <PricingTable
           numeral="§ 01"
           label="Tarifs d'été"
@@ -154,19 +159,24 @@ export function PricingInfo() {
       </div>
 
       {/* Banking coordinates */}
-      <div className="border border-[var(--lt-line)] bg-[var(--lt-surface)] p-6 flex flex-col gap-5">
+      <div className="border border-(--lt-line) rounded-lg bg-(--lt-surface) p-6 flex flex-col gap-5">
         <div className="flex flex-col gap-1">
-          <span className="lt-mono text-[9px] text-[var(--lt-moss)] uppercase tracking-widest">
+          <span className="lt-mono text-[9px] text-(--lt-moss) uppercase tracking-widest">
             Paiement par virement bancaire
           </span>
-          <span className="lt-mono text-[var(--lt-ink-mute)] text-sm">
+          <span
+            className="lt-display text-(--lt-ink)"
+            style={{ fontSize: "clamp(14px, 1.8vw, 18px)" }}
+          >
             Banque Raiffeisen Massongex-St-Maurice-Verossaz
           </span>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="lt-mono text-[10px] text-[var(--lt-ink-mute)]">Titulaire</span>
+          <span className="lt-mono text-[10px] text-(--lt-ink-mute)">
+            Titulaire
+          </span>
           <span
-            className="lt-display text-[var(--lt-ink)] leading-tight"
+            className="lt-display text-(--lt-ink) leading-tight"
             style={{ fontSize: "clamp(18px, 2.5vw, 24px)" }}
           >
             Mayen des Tsabloz
@@ -177,15 +187,18 @@ export function PricingInfo() {
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <span className="lt-mono text-[10px] text-[var(--lt-ink-mute)]">IBAN</span>
+          <span className="lt-mono text-[10px] text-(--lt-ink-mute)">IBAN</span>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="lt-mono text-[18px] text-[var(--lt-ink)] tracking-wider select-all">
+            <span
+              className="lt-display text-(--lt-ink) tracking-wider select-all"
+              style={{ fontSize: "clamp(14px, 1.8vw, 18px)" }}
+            >
               {IBAN}
             </span>
             <button
               type="button"
               onClick={copyIban}
-              className="lt-mono text-[11px] border border-[var(--lt-line)] px-2.5 py-1 bg-transparent cursor-pointer text-[var(--lt-ink-soft)] hover:text-[var(--lt-ink)] transition-colors"
+              className="lt-mono text-[11px] border border-(--lt-line) px-2.5 py-1 bg-transparent cursor-pointer text-(--lt-ink-soft) hover:text-(--lt-ink) transition-colors"
             >
               {copied ? "Copié !" : "Copier"}
             </button>

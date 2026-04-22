@@ -51,7 +51,7 @@ export default function Home() {
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end">
           <div>
             <span className="lt-mono text-[var(--lt-moss)]">
-              ✦ Saison 2026 · ouverte
+              ✦ Saison {new Date().getFullYear()} · ouverte
             </span>
             <h1
               className="lt-display mt-3.5"
@@ -77,8 +77,8 @@ export default function Home() {
           <div className="pl-7 border-l border-[var(--lt-line)] self-end">
             <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed m-0 max-w-[38ch]">
               Choisis tes dates sur le calendrier, remplis le formulaire — ta
-              réservation devra ensuite être confirmée. <br /> Tu recevras
-              la confirmation par e-mail.
+              réservation devra ensuite être confirmée. <br /> Tu recevras la
+              confirmation par e-mail.
             </p>
           </div>
         </div>

@@ -397,8 +397,8 @@ export function CabinInfo() {
       <div className="grid md:grid-cols-2 gap-10 items-start">
         {(
           [
-            { numeral: "§ 07", label: "En arrivant", rules: ARRIVAL_RULES },
-            { numeral: "§ 08", label: "En partant", rules: DEPARTURE_RULES },
+            { numeral: "§ 01", label: "En arrivant", rules: ARRIVAL_RULES },
+            { numeral: "§ 02", label: "En partant", rules: DEPARTURE_RULES },
           ] as const
         ).map(({ numeral, label, rules }) => (
           <div key={label}>
