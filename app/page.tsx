@@ -77,7 +77,7 @@ export default function Home() {
           <div className="pl-7 border-l border-[var(--lt-line)] self-end">
             <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed m-0 max-w-[38ch]">
               Choisis tes dates sur le calendrier, remplis le formulaire — ta
-              réservation devra ensuite être confirmée. <br></br> Tu recervras
+              réservation devra ensuite être confirmée. <br /> Tu recevras
               la confirmation par e-mail.
             </p>
           </div>
