@@ -229,7 +229,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
           <span>
             Procédez au règlement de votre séjour en vous référant aux
             indications de la page{" "}
-            <strong>&laquo;&thinsp;Liste des prix&thinsp;&raquo;</strong>.
+            <strong>&laquo;&thinsp;Tarifs&thinsp;&raquo;</strong>.
           </span>
         </li>
       </ul>

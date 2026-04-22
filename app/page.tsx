@@ -25,6 +25,18 @@ export default function Home() {
   const [successBooking, setSuccessBooking] = useState<Booking | null>(null);
   const [tab, setTab] = useState<"book" | "cabin" | "tarifs">("book");
 
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash === "cabin" || hash === "tarifs" || hash === "book") {
+      setTab(hash);
+    }
+  }, []);
+
+  function handleTabChange(newTab: "book" | "cabin" | "tarifs") {
+    setTab(newTab);
+    window.location.hash = newTab;
+  }
+
   function fetchBookings() {
     fetch("/api/bookings")
       .then((r) => r.json())
@@ -97,7 +109,7 @@ export default function Home() {
           return (
             <button
               key={id}
-              onClick={() => setTab(id)}
+              onClick={() => handleTabChange(id)}
               className="bg-transparent border-none py-4 px-5 font-[var(--lt-font-ui)] text-sm cursor-pointer flex items-center gap-2 -mb-px"
               style={{
                 fontWeight: active ? 600 : 400,
