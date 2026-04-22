@@ -183,6 +183,7 @@ export function PricingInfo() {
               {IBAN}
             </span>
             <button
+              type="button"
               onClick={copyIban}
               className="lt-mono text-[11px] border border-[var(--lt-line)] px-2.5 py-1 bg-transparent cursor-pointer text-[var(--lt-ink-soft)] hover:text-[var(--lt-ink)] transition-colors"
             >
