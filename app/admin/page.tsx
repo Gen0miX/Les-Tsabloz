@@ -1,7 +1,7 @@
 // app/admin/page.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -74,21 +74,27 @@ export default function AdminPage() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const counts = {
+  const counts = useMemo(() => ({
     pending: bookings.filter((b) => b.status === 'pending').length,
     approved: bookings.filter((b) => b.status === 'approved').length,
     rejected: bookings.filter((b) => b.status === 'rejected').length,
-  }
+  }), [bookings])
 
-  const visible = bookings.filter((b) => b.status === filter)
+  const visible = useMemo(
+    () => bookings.filter((b) => b.status === filter),
+    [bookings, filter]
+  )
   const section = SECTIONS.find((s) => s.status === filter)!
 
-  // Next arrival
-  const nextArrival = bookings
-    .filter((b) => b.status === 'approved')
-    .map((b) => new Date(b.start_date))
-    .filter((d) => d >= new Date())
-    .sort((a, b) => a.getTime() - b.getTime())[0]
+  const nextArrival = useMemo(
+    () =>
+      bookings
+        .filter((b) => b.status === 'approved')
+        .map((b) => new Date(b.start_date))
+        .filter((d) => d >= new Date())
+        .sort((a, b) => a.getTime() - b.getTime())[0],
+    [bookings]
+  )
 
   return (
     <div className="lt-root min-h-screen bg-[var(--lt-bg)] grid md:grid-cols-[240px_1fr]">
