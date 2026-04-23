@@ -3,6 +3,8 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Spinner } from '@/components/ui/spinner'
 import { StatusBadge } from '@/components/brand'
 import type { Booking } from '@/types/booking'
 
@@ -91,7 +93,14 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
             disabled={!!loading}
             className="bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
           >
-            {loading === 'approved' ? 'Validation…' : '✓ Accepter'}
+            {loading === 'approved' ? (
+              <span className="flex items-center gap-2">
+                <Spinner className="h-3.5 w-3.5" />
+                Validation…
+              </span>
+            ) : (
+              '✓ Accepter'
+            )}
           </Button>
           <Button
             size="sm"
@@ -100,10 +109,41 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
             disabled={!!loading}
             className="text-[var(--lt-rust)] border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-[var(--lt-rust-soft)]"
           >
-            {loading === 'rejected' ? 'Refus…' : '✕ Refuser'}
+            {loading === 'rejected' ? (
+              <span className="flex items-center gap-2">
+                <Spinner className="h-3.5 w-3.5" />
+                Refus…
+              </span>
+            ) : (
+              '✕ Refuser'
+            )}
           </Button>
         </div>
       )}
+    </div>
+  )
+}
+
+export function BookingCardSkeleton() {
+  return (
+    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-[18px] flex flex-col gap-3 border-l-[3px] border-l-[var(--lt-line)]">
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+          <Skeleton className="h-3 w-16" />
+          <Skeleton className="h-5 w-40" />
+          <Skeleton className="h-3.5 w-32" />
+        </div>
+        <Skeleton className="h-5 w-16 rounded-full" />
+      </div>
+      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
+        <Skeleton className="h-8 w-20" />
+        <div className="flex-1 h-px bg-[var(--lt-line)]" />
+        <Skeleton className="h-8 w-20" />
+      </div>
+      <div className="flex gap-2 mt-0.5">
+        <Skeleton className="h-8 w-24 rounded-md" />
+        <Skeleton className="h-8 w-24 rounded-md" />
+      </div>
     </div>
   )
 }
