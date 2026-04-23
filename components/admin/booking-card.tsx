@@ -38,6 +38,7 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
         body: JSON.stringify({ status }),
       })
       if (res.ok) onStatusChange(booking.id, status)
+      else setConfirmCancel(false)
     } finally {
       setLoading(null)
     }
