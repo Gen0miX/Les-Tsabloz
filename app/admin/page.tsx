@@ -5,8 +5,10 @@ import { useState, useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Spinner } from '@/components/ui/spinner'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { BookingCard } from '@/components/admin/booking-card'
+import { BookingCard, BookingCardSkeleton } from '@/components/admin/booking-card'
 import { LTWordmark } from '@/components/brand'
 import type { Booking, BookingStatus } from '@/types/booking'
 
@@ -26,6 +28,8 @@ export default function AdminPage() {
   const [icalUrl, setIcalUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const [filter, setFilter] = useState<BookingStatus>('pending')
+  const [loadingBookings, setLoadingBookings] = useState(true)
+  const [loadingLogout, setLoadingLogout] = useState(false)
   const router = useRouter()
 
   const supabase = createBrowserClient(
@@ -34,18 +38,21 @@ export default function AdminPage() {
   )
 
   useEffect(() => {
-    fetch('/api/admin/bookings')
-      .then((r) => r.json())
-      .then((data) => setBookings(data.bookings ?? []))
+    setLoadingBookings(true)
+    Promise.all([
+      fetch('/api/admin/bookings').then((r) => r.json()),
+      fetch('/api/admin/ical-url').then((r) => r.json()),
+    ])
+      .then(([bookingsData, icalData]) => {
+        setBookings(bookingsData.bookings ?? [])
+        setIcalUrl(icalData.url ?? '')
+      })
       .catch(console.error)
-
-    fetch('/api/admin/ical-url')
-      .then((r) => r.json())
-      .then((data) => setIcalUrl(data.url ?? ''))
-      .catch(console.error)
+      .finally(() => setLoadingBookings(false))
   }, [])
 
   async function handleLogout() {
+    setLoadingLogout(true)
     await supabase.auth.signOut()
     router.push('/admin/login')
     router.refresh()
@@ -142,8 +149,16 @@ export default function AdminPage() {
               variant="outline"
               size="sm"
               onClick={handleLogout}
+              disabled={loadingLogout}
             >
-              Déconnexion
+              {loadingLogout ? (
+                <span className="flex items-center gap-2">
+                  <Spinner className="h-4 w-4" />
+                  Déconnexion…
+                </span>
+              ) : (
+                'Déconnexion'
+              )}
             </Button>
           </div>
         </header>
@@ -171,7 +186,7 @@ export default function AdminPage() {
                 className="lt-display text-[30px] mt-1.5"
                 style={{ color: s.color }}
               >
-                {s.val}
+                {loadingBookings ? <Skeleton className="h-8 w-12 mt-1" /> : s.val}
               </div>
             </div>
           ))}
@@ -193,7 +208,13 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {visible.length === 0 ? (
+          {loadingBookings ? (
+            <div className="flex flex-col gap-3.5">
+              <BookingCardSkeleton />
+              <BookingCardSkeleton />
+              <BookingCardSkeleton />
+            </div>
+          ) : visible.length === 0 ? (
             <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-10 text-center">
               <span className="lt-mono">Aucune demande</span>
             </div>
