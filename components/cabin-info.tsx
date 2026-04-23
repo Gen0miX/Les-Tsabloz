@@ -5,6 +5,7 @@ import * as React from "react";
 import { ImageViewer, type ViewerImage } from "@/components/image-viewer";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ArrivalRule {
   title: string;
@@ -263,6 +264,8 @@ function GalleryTile({
   className?: string;
   onOpen: (i: number) => void;
 }) {
+  const [loaded, setLoaded] = React.useState(false);
+
   return (
     <button
       type="button"
@@ -276,20 +279,29 @@ function GalleryTile({
       )}
     >
       {image.src ? (
-        <Image
-          src={image.src}
-          alt={image.alt || image.label}
-          className="absolute inset-0 w-full h-full object-cover"
-          placeholder="blur"
-        />
+        <>
+          {!loaded && (
+            <Skeleton className="absolute inset-0 rounded-none z-[1]" />
+          )}
+          <Image
+            src={image.src}
+            alt={image.alt || image.label}
+            className={cn(
+              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
+            fill={true}
+            onLoad={() => setLoaded(true)}
+          />
+        </>
       ) : null}
-      <span className="relative z-[1]">
+      <span className="relative z-[2]">
         {image.num} · {image.label}
       </span>
       {/* Magnifier indicator */}
       <span
         aria-hidden
-        className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-[var(--lt-surface)] border border-[var(--lt-line)] opacity-0 scale-75 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 grid place-items-center text-[var(--lt-ink)]"
+        className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-[var(--lt-surface)] border border-[var(--lt-line)] opacity-0 scale-75 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 grid place-items-center text-[var(--lt-ink)] z-[3]"
       >
         <svg
           width="14"
