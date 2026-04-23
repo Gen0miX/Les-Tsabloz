@@ -16,6 +16,10 @@ const approvedBooking: Booking = {
 }
 
 describe('BookingCard — approved', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('affiche le bouton Annuler', () => {
     render(<BookingCard booking={approvedBooking} onStatusChange={() => {}} />)
     expect(screen.getByRole('button', { name: /annuler/i })).toBeInTheDocument()
@@ -48,5 +52,12 @@ describe('BookingCard — approved', () => {
     await waitFor(() => {
       expect(onStatusChange).toHaveBeenCalledWith('abc123def456', 'rejected')
     })
+    expect(global.fetch).toHaveBeenCalledWith(
+      '/api/admin/bookings/abc123def456',
+      expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({ status: 'rejected' }),
+      })
+    )
   })
 })
