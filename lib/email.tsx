@@ -7,7 +7,9 @@ import { render } from '@react-email/render'
 import { Resend } from 'resend'
 import type { Booking } from '@/types/booking'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY!)
+}
 
 const c = {
   moss:     '#2e6b42',
@@ -166,7 +168,7 @@ export function AdminNotificationEmail({ booking, adminUrl }: { booking: Booking
 
 export async function sendBookingConfirmation(booking: Booking): Promise<void> {
   const html = await render(React.createElement(ConfirmationEmail, { booking }))
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
     to: booking.email,
     subject: 'Votre réservation aux Tsabloz est confirmée',
@@ -177,7 +179,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<void> {
 export async function sendBookingNotification(booking: Booking): Promise<void> {
   const adminUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/admin`
   const html = await render(React.createElement(AdminNotificationEmail, { booking, adminUrl }))
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
     to: process.env.OWNER_EMAIL!,
     subject: `Nouvelle demande de réservation — ${booking.name}`,

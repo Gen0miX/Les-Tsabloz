@@ -78,7 +78,7 @@ describe('AdminNotificationEmail', () => {
   it("n'affiche pas de bloc message quand message est null", async () => {
     const html = await render(React.createElement(AdminNotificationEmail, { booking: bookingNoMessage, adminUrl }))
     expect(html).not.toContain('Nous serons deux adultes et un enfant.')
-    expect(html).not.toContain('>Message<')
+    expect(html).not.toContain('Message')
   })
 
   it("contient le lien vers l'espace admin", async () => {
