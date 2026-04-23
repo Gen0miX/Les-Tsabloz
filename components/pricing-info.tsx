@@ -101,7 +101,7 @@ function PricingTable({
                     fontWeight: ci === 5 ? 600 : 400,
                   }}
                 >
-                  {val === null ? "—" : `${val} .-`}
+                  {val === null ? "—" : `${val}.-`}
                 </TableCell>
               ))}
             </TableRow>

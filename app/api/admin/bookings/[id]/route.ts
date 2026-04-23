@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
 import { createAuthClient } from '@/lib/supabase/auth-client'
+import { sendBookingConfirmation } from '@/lib/email'
 
 export async function PATCH(
   request: Request,
@@ -29,6 +30,10 @@ export async function PATCH(
 
   if (error) {
     return NextResponse.json({ error: 'Failed to update booking' }, { status: 500 })
+  }
+
+  if (status === 'approved') {
+    sendBookingConfirmation(data).catch(console.error)
   }
 
   return NextResponse.json({ booking: data })

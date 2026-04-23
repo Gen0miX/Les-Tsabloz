@@ -20,7 +20,20 @@
       "Read(//c/Users/conta/.claude/projects/C--Users-conta-Documents-react-les-tsabloz/807524cc-3b5f-469d-b9a3-b1c5fde8372e/subagents/**)",
       "Bash(git *)",
       "Bash(npx vitest *)",
-      "Bash(npx shadcn@latest add table --yes)"
+      "Bash(npx shadcn@latest add table --yes)",
+      "Bash(xargs ls *)",
+      "Bash(xargs grep *)",
+      "Bash(C:/Users/conta/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh --project-dir \"/c/Users/conta/Documents/react/Les-Tsabloz\")",
+      "Bash(xargs cat *)",
+      "Bash(node -e \"require\\('@react-email/components'\\); require\\('@react-email/render'\\); console.log\\('OK'\\)\")",
+      "Bash(npm test *)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(JSON.stringify\\({deps: p.dependencies, devDeps: p.devDependencies}, null, 2\\)\\)\")",
+      "Bash(node -e \"const r = require\\('@react-email/render'\\); console.log\\(Object.keys\\(r\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\('exports:', list\\(p.get\\('exports', {}\\).keys\\(\\)\\)[:10]\\); print\\('main:', p.get\\('main'\\)\\); print\\('module:', p.get\\('module'\\)\\)\")",
+      "Bash(cd C:\\\\\\\\Users\\\\\\\\conta\\\\\\\\Documents\\\\\\\\react\\\\\\\\Les-Tsabloz)",
+      "Bash(NEXT_PUBLIC_BASE_URL=http://localhost:3000 npx vitest run tests/lib/email.test.tsx)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k,v\\) for k,v in {**d.get\\('dependencies',{}\\), **d.get\\('devDependencies',{}\\)}.items\\(\\) if 'react-email' in k or 'vitest' in k or 'resend' in k]\")",
+      "Bash(node -e ' *)"
     ]
   }
 }
