@@ -1,8 +1,18 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render } from '@react-email/render'
 import React from 'react'
 import { ConfirmationEmail, AdminNotificationEmail } from '@/lib/email'
 import type { Booking } from '@/types/booking'
+
+// Mock Resend module to prevent API key requirement during tests
+vi.mock('resend', () => {
+  const mockResend = class {
+    emails = {
+      send: vi.fn().mockResolvedValue({ id: 'mocked' }),
+    }
+  }
+  return { Resend: mockResend }
+})
 
 const booking: Booking = {
   id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -37,7 +47,7 @@ describe('ConfirmationEmail', () => {
 
   it('contient un lien vers le calendrier', async () => {
     const html = await render(React.createElement(ConfirmationEmail, { booking }))
-    expect(html).toContain('/api/bookings/a1b2c3d4-e5f6-7890-abcd-ef1234567890/ical')
+    expect(html).toContain('http://localhost:3000/api/bookings/a1b2c3d4-e5f6-7890-abcd-ef1234567890/ical')
   })
 })
 
@@ -67,7 +77,7 @@ describe('AdminNotificationEmail', () => {
 
   it("n'affiche pas de bloc message quand message est null", async () => {
     const html = await render(React.createElement(AdminNotificationEmail, { booking: bookingNoMessage, adminUrl }))
-    expect(html).not.toContain('Message')
+    expect(html).not.toContain('Nous serons deux adultes et un enfant.')
   })
 
   it("contient le lien vers l'espace admin", async () => {

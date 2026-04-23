@@ -1,17 +1,5 @@
 import '@testing-library/jest-dom'
-import { vi } from 'vitest'
 
-// Mock Resend module to prevent API key requirement during tests
-vi.mock('resend', () => {
-  const mockResend = class {
-    emails = {
-      send: vi.fn().mockResolvedValue({ id: 'mocked' }),
-    }
-  }
-  return {
-    Resend: mockResend,
-  }
-})
-
-// Set a dummy API key for tests
+// Set environment variables for tests
 process.env.RESEND_API_KEY = 'test-api-key'
+process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000'
