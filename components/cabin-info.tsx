@@ -291,6 +291,7 @@ function GalleryTile({
               loaded ? "opacity-100" : "opacity-0",
             )}
             fill={true}
+            sizes="(max-width: 768px) 100vw, 50vw"
             onLoad={() => setLoaded(true)}
           />
         </>
