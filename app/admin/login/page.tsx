@@ -7,6 +7,7 @@ import { createBrowserClient } from '@supabase/ssr'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LTLogo } from '@/components/brand'
 
@@ -106,7 +107,14 @@ export default function AdminLoginPage() {
                 disabled={loading}
                 className="mt-1.5 bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
               >
-                {loading ? 'Connexion…' : 'Accéder au tableau de bord'}
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Connexion…
+                  </span>
+                ) : (
+                  'Accéder au tableau de bord'
+                )}
               </Button>
             </form>
 
