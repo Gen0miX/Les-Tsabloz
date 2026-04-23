@@ -9,6 +9,7 @@ import {
   DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export type ViewerImage = {
@@ -211,7 +212,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
                 style={{ width: 84, height: 56 }}
               >
                 {img.src ? (
-                  <img
+                  <Image
                     src={img.src}
                     alt=""
                     className="w-full h-full object-cover block"
@@ -245,7 +246,7 @@ function MediaFrame({ img }: { img: ViewerImage }) {
       )}
     >
       {img.src ? (
-        <img
+        <Image
           src={img.src}
           alt={img.alt || img.label}
           className="w-full h-full object-cover block"

@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import { ImageViewer, type ViewerImage } from "@/components/image-viewer";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface ArrivalRule {
@@ -275,10 +276,11 @@ function GalleryTile({
       )}
     >
       {image.src ? (
-        <img
+        <Image
           src={image.src}
           alt={image.alt || image.label}
           className="absolute inset-0 w-full h-full object-cover"
+          placeholder="blur"
         />
       ) : null}
       <span className="relative z-[1]">

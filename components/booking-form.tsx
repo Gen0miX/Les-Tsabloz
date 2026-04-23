@@ -130,8 +130,8 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
         <div className="flex items-center gap-2 px-3 py-2 bg-(--lt-surface-2) rounded-md">
           <span className="text-(--lt-moss)">◦</span>
           <span className="text-[12.5px] text-(--lt-ink-soft)">
-            <strong className="text-(--lt-ink)">{nights} nuits</strong> · 2
-            chambres · jusqu’à 6 personnes
+            <strong className="text-(--lt-ink)">{nights} nuits</strong> · 4
+            chambres · jusqu’à 10 personnes
           </span>
         </div>
       )}
