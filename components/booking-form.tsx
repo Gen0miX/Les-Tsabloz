@@ -6,6 +6,7 @@ import type { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import type { Booking } from "@/types/booking";
 
 interface BookingFormProps {
@@ -101,7 +102,8 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
   return (
     <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 flex flex-col gap-4">
       <div>
-        <span className="lt-mono">§ 02 — Vos informations</span>
+        <span className="lt-numeral">§ 02</span>
+        <span className="lt-mono"> Tes informations</span>
         <h3 className="lt-display text-[22px] mt-1.5">Demande de séjour</h3>
       </div>
 
@@ -120,7 +122,7 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
               {f ? (f as { day: string }).day : "—"}
             </div>
             <span className="text-[11px] text-(--lt-ink-mute)">
-              {f ? (f as { dow: string }).dow : "Sélectionnez une date"}
+              {f ? (f as { dow: string }).dow : "Sélectionne une date"}
             </span>
           </div>
         ))}
@@ -168,7 +170,7 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
 
         {!startDate && (
           <p className="text-sm text-(--lt-ink-mute)">
-            Sélectionnez vos dates sur le calendrier pour continuer
+            Sélectionne tes dates sur le calendrier pour continuer
           </p>
         )}
         {error && <p className="text-sm text-(--lt-rust)">{error}</p>}
@@ -178,11 +180,18 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
           disabled={loading || !canSubmit}
           className="mt-1 bg-(--lt-moss) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
         >
-          {loading ? "Envoi…" : "Envoyer la demande"}
+          {loading ? (
+            <span className="flex items-center gap-2">
+              <Spinner className="h-4 w-4" />
+              Envoi…
+            </span>
+          ) : (
+            "Envoyer la demande"
+          )}
         </Button>
 
         <p className="m-0 text-[12px] text-(--lt-ink-mute) leading-relaxed">
-          Votre demande sera examinée. Aucun paiement n’est requis à ce stade.
+          Ta demande sera examinée. Aucun paiement n’est requis à ce stade.
         </p>
       </form>
     </div>
