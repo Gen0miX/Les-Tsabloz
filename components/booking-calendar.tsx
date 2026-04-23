@@ -32,10 +32,9 @@ export function BookingCalendar({
     <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 flex flex-col gap-3.5">
       <div className="flex items-baseline justify-between">
         <div>
-          <span className="lt-mono">§ 01 — Dates</span>
-          <h3 className="lt-display text-[22px] mt-1.5">
-            Choisissez vos dates
-          </h3>
+          <span className="lt-numeral">§ 01</span>
+          <span className="lt-mono"> Dates</span>
+          <h3 className="lt-display text-[22px] mt-1.5">Choisis tes dates</h3>
         </div>
       </div>
 

@@ -1,47 +1,47 @@
 // app/admin/login/page.tsx
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createBrowserClient } from '@supabase/ssr'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Spinner } from '@/components/ui/spinner'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { LTLogo } from '@/components/brand'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createBrowserClient } from "@supabase/ssr";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { LTLogo } from "@/components/brand";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     const { error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
 
-    setLoading(false)
+    setLoading(false);
 
     if (authError) {
-      setError('Identifiants invalides')
-      return
+      setError("Identifiants invalides");
+      return;
     }
 
-    router.push('/admin')
-    router.refresh()
+    router.push("/admin");
+    router.refresh();
   }
 
   return (
@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
         className="absolute top-0 left-0 right-0 h-[180px] border-b border-[var(--lt-line)] pointer-events-none"
         style={{
           backgroundImage:
-            'repeating-linear-gradient(135deg, transparent 0 14px, oklch(from var(--lt-moss) l c h / 0.08) 14px 15px)',
+            "repeating-linear-gradient(135deg, transparent 0 14px, oklch(from var(--lt-moss) l c h / 0.08) 14px 15px)",
         }}
       />
       <div className="absolute top-4 right-4">
@@ -72,15 +72,12 @@ export default function AdminLoginPage() {
 
         <Card className="p-8 border-[var(--lt-line)] bg-[var(--lt-surface)]">
           <CardContent className="p-0">
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-4"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className="lt-label">E-mail</label>
                 <Input
                   type="email"
-                  placeholder="admin@tsabloz.ch"
+                  placeholder="email@exemple.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -113,7 +110,7 @@ export default function AdminLoginPage() {
                     Connexion…
                   </span>
                 ) : (
-                  'Accéder au tableau de bord'
+                  "Accéder au tableau de bord"
                 )}
               </Button>
             </form>
@@ -137,5 +134,5 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
