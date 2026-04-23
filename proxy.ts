@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 import { createServerClient } from '@supabase/ssr'
 
-const PUBLIC_PATHS = ['/login', '/api/auth/login', '/api/auth/logout', '/api/ical']
+const PUBLIC_PATHS = ['/login', '/admin/login', '/api/auth/login', '/api/auth/logout', '/api/ical']
 
 function guestSecret(): Uint8Array {
   return new TextEncoder().encode(process.env.COOKIE_SECRET!)
@@ -50,13 +50,6 @@ export async function proxy(request: NextRequest) {
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const response = NextResponse.next()
-
-    // /admin/login is behind the guest password wall but not the admin auth wall
-    if (pathname === '/admin/login') {
-      const guestOk = await isGuestAuthenticated(request)
-      if (!guestOk) return NextResponse.redirect(new URL('/login', request.url))
-      return response
-    }
 
     const user = await getAdminUser(request, response)
     if (!user) {
