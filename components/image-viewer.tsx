@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import { useTransition } from "react";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +30,7 @@ type Props = {
 export function ImageViewer({ images, openIndex, onClose }: Props) {
   const [index, setIndex] = React.useState(openIndex ?? 0);
   const thumbsRef = React.useRef<HTMLDivElement>(null);
+  const [, startTransition] = useTransition();
 
   React.useEffect(() => {
     if (openIndex != null) setIndex(openIndex);
@@ -36,9 +38,11 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
 
   const go = React.useCallback(
     (dir: number) => {
-      setIndex((i) => (i + dir + images.length) % images.length);
+      startTransition(() => {
+        setIndex((i) => (i + dir + images.length) % images.length);
+      });
     },
-    [images.length],
+    [images.length, startTransition],
   );
 
   React.useEffect(() => {
@@ -202,7 +206,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
               <button
                 type="button"
                 key={i}
-                onClick={() => setIndex(i)}
+                onClick={() => startTransition(() => setIndex(i))}
                 aria-label={`Voir ${img.label}`}
                 className={cn(
                   "relative flex-none w-21 h-14 rounded-md overflow-hidden border-2 border-transparent bg-muted cursor-pointer transition",
