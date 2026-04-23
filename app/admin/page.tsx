@@ -53,9 +53,13 @@ export default function AdminPage() {
 
   async function handleLogout() {
     setLoadingLogout(true)
-    await supabase.auth.signOut()
-    router.push('/admin/login')
-    router.refresh()
+    try {
+      await supabase.auth.signOut()
+      router.push('/admin/login')
+      router.refresh()
+    } finally {
+      setLoadingLogout(false)
+    }
   }
 
   function handleStatusChange(id: string, status: 'approved' | 'rejected') {

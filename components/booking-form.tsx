@@ -69,31 +69,32 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
     if (!canSubmit) return;
     setLoading(true);
     setError(null);
-
-    const res = await fetch("/api/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        start_date: startDate,
-        end_date: endDate,
-        message: message || undefined,
-      }),
-    });
-
-    const data = await res.json();
-    setLoading(false);
-
-    if (!res.ok) {
-      setError(data.error ?? "Une erreur est survenue");
-      return;
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          start_date: startDate,
+          end_date: endDate,
+          message: message || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error ?? "Une erreur est survenue");
+        return;
+      }
+      setName("");
+      setEmail("");
+      setMessage("");
+      onSuccess(data.booking);
+    } catch {
+      setError("Une erreur réseau est survenue");
+    } finally {
+      setLoading(false);
     }
-
-    setName("");
-    setEmail("");
-    setMessage("");
-    onSuccess(data.booking);
   }
 
   const fromF = selectedRange?.from ? formatLong(selectedRange.from) : null;

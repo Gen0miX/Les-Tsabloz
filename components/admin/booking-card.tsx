@@ -30,13 +30,16 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
 
   async function handleAction(status: 'approved' | 'rejected') {
     setLoading(status)
-    const res = await fetch(`/api/admin/bookings/${booking.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    })
-    setLoading(null)
-    if (res.ok) onStatusChange(booking.id, status)
+    try {
+      const res = await fetch(`/api/admin/bookings/${booking.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      })
+      if (res.ok) onStatusChange(booking.id, status)
+    } finally {
+      setLoading(null)
+    }
   }
 
   const nights = nightsBetween(booking.start_date, booking.end_date)
