@@ -8,6 +8,7 @@ import { BookingForm } from "@/components/booking-form";
 import { BookingSuccess } from "@/components/booking-success";
 import { CabinInfo } from "@/components/cabin-info";
 import { PricingInfo } from "@/components/pricing-info";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { DateRange } from "react-day-picker";
 import type { Booking } from "@/types/booking";
 
@@ -24,6 +25,7 @@ export default function Home() {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
   const [successBooking, setSuccessBooking] = useState<Booking | null>(null);
   const [tab, setTab] = useState<"book" | "cabin" | "tarifs">("book");
+  const [loadingBookings, setLoadingBookings] = useState(true);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -38,10 +40,12 @@ export default function Home() {
   }
 
   function fetchBookings() {
+    setLoadingBookings(true)
     fetch("/api/bookings")
       .then((r) => r.json())
       .then((data) => setBookedRanges(data.bookings ?? []))
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setLoadingBookings(false))
   }
 
   useEffect(() => {
@@ -137,11 +141,15 @@ export default function Home() {
       <main className="flex-1 px-10 md:px-16 py-10">
         {tab === "book" ? (
           <div className="grid md:grid-cols-2 gap-7 items-start max-w-6xl mx-auto">
-            <BookingCalendar
-              bookedRanges={bookedRanges}
-              selectedRange={selectedRange}
-              onSelectRange={setSelectedRange}
-            />
+            {loadingBookings ? (
+              <Skeleton className="h-[420px] rounded-(--lt-radius-lg)" />
+            ) : (
+              <BookingCalendar
+                bookedRanges={bookedRanges}
+                selectedRange={selectedRange}
+                onSelectRange={setSelectedRange}
+              />
+            )}
             <BookingForm
               selectedRange={selectedRange}
               onSuccess={handleSuccess}
