@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type ViewerImage = {
   src?: string;
@@ -211,22 +212,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
                 )}
                 style={{ width: 84, height: 56 }}
               >
-                {img.src ? (
-                  <Image
-                    src={img.src}
-                    alt=""
-                    className="w-full h-full object-cover block"
-                  />
-                ) : (
-                  <span
-                    aria-hidden
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(135deg, transparent 0 8px, rgba(0,0,0,0.12) 8px 9px)",
-                    }}
-                  />
-                )}
+                <ThumbImage img={img} />
               </button>
             ))}
           </div>
@@ -236,8 +222,47 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
   );
 }
 
+function ThumbImage({ img }: { img: ViewerImage }) {
+  const [loaded, setLoaded] = React.useState(false);
+
+  if (!img.src) {
+    return (
+      <span
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(135deg, transparent 0 8px, rgba(0,0,0,0.12) 8px 9px)",
+        }}
+      />
+    );
+  }
+
+  return (
+    <>
+      {!loaded && <Skeleton className="absolute inset-0 rounded-none" />}
+      <Image
+        src={img.src}
+        alt=""
+        className={cn(
+          "w-full h-full object-cover block transition-opacity duration-500",
+          loaded ? "opacity-100" : "opacity-0",
+        )}
+        fill={true}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
+  );
+}
+
 function MediaFrame({ img }: { img: ViewerImage }) {
+  const [loaded, setLoaded] = React.useState(false);
   const placeholder = !img.src;
+
+  React.useEffect(() => {
+    setLoaded(false);
+  }, [img.src]);
+
   return (
     <div
       className={cn(
@@ -246,11 +271,21 @@ function MediaFrame({ img }: { img: ViewerImage }) {
       )}
     >
       {img.src ? (
-        <Image
-          src={img.src}
-          alt={img.alt || img.label}
-          className="w-full h-full object-cover block"
-        />
+        <>
+          {!loaded && (
+            <Skeleton className="absolute inset-0 rounded-none z-10" />
+          )}
+          <Image
+            src={img.src}
+            alt={img.alt || img.label}
+            className={cn(
+              "w-full h-full object-cover block transition-opacity duration-500",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
+            fill={true}
+            onLoad={() => setLoaded(true)}
+          />
+        </>
       ) : (
         <span
           aria-hidden
@@ -261,7 +296,7 @@ function MediaFrame({ img }: { img: ViewerImage }) {
           }}
         />
       )}
-      <div className="absolute bottom-4 left-4 right-4 flex items-baseline gap-3.5 px-3.5 py-2.5 rounded-lg bg-black/55 backdrop-blur text-white">
+      <div className="absolute bottom-4 left-4 right-4 flex items-baseline gap-3.5 px-3.5 py-2.5 rounded-lg bg-black/55 backdrop-blur text-white z-20">
         <span className="font-mono text-[10.5px] tracking-widest uppercase text-white/60">
           {img.num ?? ""}
         </span>
