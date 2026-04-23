@@ -43,7 +43,7 @@ describe('BookingCard — approved', () => {
 
   it('appelle onStatusChange avec rejected après confirmation', async () => {
     const onStatusChange = vi.fn()
-    global.fetch = vi.fn().mockResolvedValue({ ok: true })
+    vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true } as Response)
 
     render(<BookingCard booking={approvedBooking} onStatusChange={onStatusChange} />)
     fireEvent.click(screen.getByRole('button', { name: /annuler/i }))
