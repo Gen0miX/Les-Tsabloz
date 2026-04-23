@@ -42,7 +42,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
         setIndex((i) => (i + dir + images.length) % images.length);
       });
     },
-    [images.length, startTransition],
+    [images.length],
   );
 
   React.useEffect(() => {
@@ -253,6 +253,7 @@ function ThumbImage({ img }: { img: ViewerImage }) {
           loaded ? "opacity-100" : "opacity-0",
         )}
         fill={true}
+        sizes="84px"
         onLoad={() => setLoaded(true)}
       />
     </>
@@ -287,6 +288,7 @@ function MediaFrame({ img }: { img: ViewerImage }) {
               loaded ? "opacity-100" : "opacity-0",
             )}
             fill={true}
+            sizes="100vw"
             onLoad={() => setLoaded(true)}
           />
         </>

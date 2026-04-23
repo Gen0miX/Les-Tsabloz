@@ -36,9 +36,9 @@ export default function Home() {
   }, []);
 
   function handleTabChange(newTab: "book" | "cabin" | "tarifs") {
+    window.location.hash = newTab;
     startTransition(() => {
       setTab(newTab);
-      window.location.hash = newTab;
     });
   }
 
