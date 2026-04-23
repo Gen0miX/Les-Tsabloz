@@ -27,6 +27,7 @@ function nightsBetween(a: string, b: string) {
 
 export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
   const [loading, setLoading] = useState<'approved' | 'rejected' | null>(null)
+  const [confirmCancel, setConfirmCancel] = useState(false)
 
   async function handleAction(status: 'approved' | 'rejected') {
     setLoading(status)
@@ -121,6 +122,50 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
               '✕ Refuser'
             )}
           </Button>
+        </div>
+      )}
+
+      {booking.status === 'approved' && (
+        <div className="flex items-center gap-2 mt-0.5">
+          {confirmCancel ? (
+            <>
+              <span className="text-[13px] text-[var(--lt-ink-soft)]">
+                Confirmer l'annulation ?
+              </span>
+              <Button
+                size="sm"
+                onClick={() => handleAction('rejected')}
+                disabled={!!loading}
+                className="bg-[var(--lt-rust)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+              >
+                {loading === 'rejected' ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-3.5 w-3.5" />
+                    Annulation…
+                  </span>
+                ) : (
+                  'Oui'
+                )}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setConfirmCancel(false)}
+                disabled={!!loading}
+              >
+                Non
+              </Button>
+            </>
+          ) : (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setConfirmCancel(true)}
+              className="text-[var(--lt-rust)] border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-[var(--lt-rust-soft)]"
+            >
+              ✕ Annuler la réservation
+            </Button>
+          )}
         </div>
       )}
     </div>
