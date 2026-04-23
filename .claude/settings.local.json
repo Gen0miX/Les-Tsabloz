@@ -33,7 +33,9 @@
       "Bash(cd C:\\\\\\\\Users\\\\\\\\conta\\\\\\\\Documents\\\\\\\\react\\\\\\\\Les-Tsabloz)",
       "Bash(NEXT_PUBLIC_BASE_URL=http://localhost:3000 npx vitest run tests/lib/email.test.tsx)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k,v\\) for k,v in {**d.get\\('dependencies',{}\\), **d.get\\('devDependencies',{}\\)}.items\\(\\) if 'react-email' in k or 'vitest' in k or 'resend' in k]\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(npm show *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('dependencies',{}\\), indent=2\\)\\)\")"
     ]
   }
 }
