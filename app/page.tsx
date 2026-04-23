@@ -1,7 +1,7 @@
 // app/page.tsx — Accueil
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition, ViewTransition } from "react";
 import { TopBar } from "@/components/brand";
 import { BookingCalendar } from "@/components/booking-calendar";
 import { BookingForm } from "@/components/booking-form";
@@ -26,6 +26,7 @@ export default function Home() {
   const [successBooking, setSuccessBooking] = useState<Booking | null>(null);
   const [tab, setTab] = useState<"book" | "cabin" | "tarifs">("book");
   const [loadingBookings, setLoadingBookings] = useState(true);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -35,8 +36,10 @@ export default function Home() {
   }, []);
 
   function handleTabChange(newTab: "book" | "cabin" | "tarifs") {
-    setTab(newTab);
-    window.location.hash = newTab;
+    startTransition(() => {
+      setTab(newTab);
+      window.location.hash = newTab;
+    });
   }
 
   function fetchBookings() {
@@ -139,29 +142,31 @@ export default function Home() {
       </nav>
 
       <main className="flex-1 px-10 md:px-16 py-10">
-        {tab === "book" ? (
-          <div className="grid md:grid-cols-2 gap-7 items-start max-w-6xl mx-auto">
-            {loadingBookings ? (
-              <Skeleton className="h-[420px] rounded-(--lt-radius-lg)" />
-            ) : (
-              <BookingCalendar
-                bookedRanges={bookedRanges}
+        <ViewTransition key={tab} name="tab-content" share="auto" enter="auto" default="none">
+          {tab === "book" ? (
+            <div className="grid md:grid-cols-2 gap-7 items-start max-w-6xl mx-auto">
+              {loadingBookings ? (
+                <Skeleton className="h-105 rounded-(--lt-radius-lg)" />
+              ) : (
+                <BookingCalendar
+                  bookedRanges={bookedRanges}
+                  selectedRange={selectedRange}
+                  onSelectRange={setSelectedRange}
+                />
+              )}
+              <BookingForm
                 selectedRange={selectedRange}
-                onSelectRange={setSelectedRange}
+                onSuccess={handleSuccess}
               />
-            )}
-            <BookingForm
-              selectedRange={selectedRange}
-              onSuccess={handleSuccess}
-            />
-          </div>
-        ) : tab === "cabin" ? (
-          <div className="max-w-6xl mx-auto">
-            <CabinInfo />
-          </div>
-        ) : (
-          <PricingInfo />
-        )}
+            </div>
+          ) : tab === "cabin" ? (
+            <div className="max-w-6xl mx-auto">
+              <CabinInfo />
+            </div>
+          ) : (
+            <PricingInfo />
+          )}
+        </ViewTransition>
       </main>
 
       <footer className="px-10 md:px-16 py-6 border-t border-(--lt-line) flex justify-between bg-(--lt-surface)">
