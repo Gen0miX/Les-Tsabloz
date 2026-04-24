@@ -8,6 +8,17 @@ import { LTWordmark } from "@/components/brand";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+const heroStyle = {
+  fontSize: "clamp(56px, 9vw, 96px)",
+  lineHeight: 0.94,
+  fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
+} as const;
+
+const heroEmStyle = {
+  fontStyle: "italic",
+  fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
+} as const;
+
 export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -48,20 +59,13 @@ export default function LoginPage() {
           <span className="lt-mono text-(--lt-moss)">✦ Accès privé</span>
           <h1
             className="lt-display mt-4 text-(--lt-ink)"
-            style={{
-              fontSize: "clamp(56px, 9vw, 96px)",
-              lineHeight: 0.94,
-              fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
-            }}
+            style={heroStyle}
           >
             Les
             <br />
             <em
               className="not-italic text-(--lt-moss)"
-              style={{
-                fontStyle: "italic",
-                fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
-              }}
+              style={heroEmStyle}
             >
               Tsabloz
             </em>

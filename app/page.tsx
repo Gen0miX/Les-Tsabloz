@@ -12,6 +12,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { DateRange } from "react-day-picker";
 import type { Booking } from "@/types/booking";
 
+const heroStyle = {
+  fontSize: "clamp(44px, 6vw, 72px)",
+  lineHeight: 0.95,
+  fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
+} as const;
+
+const heroEmStyle = {
+  fontStyle: "italic",
+  fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
+} as const;
+
 interface ApprovedBooking {
   id: string;
   start_date: string;
@@ -74,20 +85,13 @@ export default function Home() {
             </span>
             <h1
               className="lt-display mt-3.5"
-              style={{
-                fontSize: "clamp(44px, 6vw, 72px)",
-                lineHeight: 0.95,
-                fontVariationSettings: "'opsz' 144, 'SOFT' 80, 'WONK' 1",
-              }}
+              style={heroStyle}
             >
               Réservez votre séjour
               <br />
               <em
-                className="not-italic text-[var(--lt-moss)]"
-                style={{
-                  fontStyle: "italic",
-                  fontVariationSettings: "'opsz' 144, 'SOFT' 100, 'WONK' 1",
-                }}
+                className="not-italic text-(--lt-moss)"
+                style={heroEmStyle}
               >
                 aux Tsabloz.
               </em>

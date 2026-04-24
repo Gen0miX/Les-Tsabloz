@@ -50,7 +50,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
 
   return (
     <div
-      className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-[18px] flex flex-col gap-3"
+      className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-[18px] flex flex-col gap-3"
       style={{
         borderLeft: `3px solid ${STATUS_BORDER[booking.status]}`,
         opacity: readOnly ? 0.65 : 1,
@@ -61,10 +61,10 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
           <div className="flex items-center gap-2.5 mb-1">
             <span className="lt-mono">#{booking.id.slice(0, 6)}</span>
           </div>
-          <div className="lt-display text-[19px] text-[var(--lt-ink)]">
+          <div className="lt-display text-[19px] text-(--lt-ink)">
             {booking.name}
           </div>
-          <div className="text-[13px] text-[var(--lt-ink-soft)] mt-0.5">
+          <div className="text-[13px] text-(--lt-ink-soft) mt-0.5">
             {booking.email}
           </div>
         </div>
@@ -77,8 +77,8 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
           <div className="text-[14.5px] mt-0.5">{formatSwissDate(booking.start_date)}</div>
         </div>
         <div className="flex-1 flex items-center">
-          <div className="flex-1 h-px bg-[var(--lt-line)] relative">
-            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[var(--lt-surface-2)] px-2 font-mono text-[10px] text-[var(--lt-moss)]">
+          <div className="flex-1 h-px bg-(--lt-line) relative">
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[var(--lt-surface-2)] px-2 font-mono text-[10px] text-(--lt-moss)">
               {nights} nuits
             </span>
           </div>
@@ -90,7 +90,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
       </div>
 
       {booking.message && (
-        <div className="text-[13.5px] text-[var(--lt-ink-soft)] italic border-l-2 border-[var(--lt-line)] pl-3 leading-relaxed">
+        <div className="text-[13.5px] text-(--lt-ink-soft) italic border-l-2 border-(--lt-line) pl-3 leading-relaxed">
           « {booking.message} »
         </div>
       )}
@@ -101,7 +101,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
             size="sm"
             onClick={() => handleAction('approved')}
             disabled={!!loading}
-            className="bg-[var(--lt-moss)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+            className="bg-(--lt-moss) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
           >
             {loading === 'approved' ? (
               <span className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
             variant="outline"
             onClick={() => handleAction('rejected')}
             disabled={!!loading}
-            className="text-[var(--lt-rust)] border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-[var(--lt-rust-soft)]"
+            className="text-(--lt-rust) border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-(--lt-rust-soft)"
           >
             {loading === 'rejected' ? (
               <span className="flex items-center gap-2">
@@ -135,14 +135,14 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
         <div className="flex items-center gap-2 mt-0.5">
           {confirmCancel ? (
             <>
-              <span className="text-[13px] text-[var(--lt-ink-soft)]">
+              <span className="text-[13px] text-(--lt-ink-soft)">
                 Confirmer l'annulation ?
               </span>
               <Button
                 size="sm"
                 onClick={() => handleAction('rejected')}
                 disabled={!!loading}
-                className="bg-[var(--lt-rust)] hover:brightness-95 text-[oklch(0.98_0.01_90)]"
+                className="bg-(--lt-rust) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
               >
                 {loading === 'rejected' ? (
                   <span className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
               size="sm"
               variant="outline"
               onClick={() => setConfirmCancel(true)}
-              className="text-[var(--lt-rust)] border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-[var(--lt-rust-soft)]"
+              className="text-(--lt-rust) border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-(--lt-rust-soft)"
             >
               ✕ Annuler la réservation
             </Button>
@@ -180,7 +180,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
 
 export function BookingCardSkeleton() {
   return (
-    <div className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-[18px] flex flex-col gap-3 border-l-[3px] border-l-[var(--lt-line)]">
+    <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-[18px] flex flex-col gap-3 border-l-[3px] border-l-(--lt-line)">
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 min-w-0 flex flex-col gap-1.5">
           <Skeleton className="h-3 w-16" />
@@ -191,7 +191,7 @@ export function BookingCardSkeleton() {
       </div>
       <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
         <Skeleton className="h-8 w-20" />
-        <div className="flex-1 h-px bg-[var(--lt-line)]" />
+        <div className="flex-1 h-px bg-(--lt-line)" />
         <Skeleton className="h-8 w-20" />
       </div>
       <div className="flex gap-2 mt-0.5">

@@ -40,7 +40,7 @@ const ARRIVAL_RULES: ArrivalRule[] = [
             "Les bonbonnes de gaz de rechange.",
           ].map((item) => (
             <li key={item} className="flex gap-2">
-              <span className="text-[var(--lt-moss)] select-none">–</span>
+              <span className="text-(--lt-moss) select-none">–</span>
               <span>{item}</span>
             </li>
           ))}
@@ -79,7 +79,7 @@ const ARRIVAL_RULES: ArrivalRule[] = [
           </>,
         ].map((item, i) => (
           <li key={i} className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>{item}</span>
           </li>
         ))}
@@ -97,7 +97,7 @@ const ARRIVAL_RULES: ArrivalRule[] = [
             "Le garde-manger (situé dans la pièce à côté de la cuisine, en bas des escaliers).",
           ].map((item) => (
             <li key={item} className="flex gap-2">
-              <span className="text-[var(--lt-moss)] select-none">–</span>
+              <span className="text-(--lt-moss) select-none">–</span>
               <span>{item}</span>
             </li>
           ))}
@@ -120,7 +120,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
         est également affichée derrière la porte d'entrée.
         <ul className="mt-1.5 space-y-0.5 pl-0 list-none">
           <li className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>
               <strong>Bois :</strong> Merci de recharger quelques bûches pour
               les prochains occupants. Le stock se situe à l'extérieur, juste
@@ -151,7 +151,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
           </>,
         ].map((item, i) => (
           <li key={i} className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>{item}</span>
           </li>
         ))}
@@ -174,7 +174,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
           </>,
         ].map((item, i) => (
           <li key={i} className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>{item}</span>
           </li>
         ))}
@@ -196,7 +196,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
           </>,
         ].map((item, i) => (
           <li key={i} className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>{item}</span>
           </li>
         ))}
@@ -215,7 +215,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
           </>,
         ].map((item, i) => (
           <li key={i} className="flex gap-2">
-            <span className="text-[var(--lt-moss)] select-none">–</span>
+            <span className="text-(--lt-moss) select-none">–</span>
             <span>{item}</span>
           </li>
         ))}
@@ -227,7 +227,7 @@ const DEPARTURE_RULES: ArrivalRule[] = [
     content: (
       <ul className="space-y-0.5 pl-0 list-none">
         <li className="flex gap-2">
-          <span className="text-[var(--lt-moss)] select-none">–</span>
+          <span className="text-(--lt-moss) select-none">–</span>
           <span>
             Procédez au règlement de votre séjour en vous référant aux
             indications de la page{" "}
@@ -302,7 +302,7 @@ function GalleryTile({
       {/* Magnifier indicator */}
       <span
         aria-hidden
-        className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-[var(--lt-surface)] border border-[var(--lt-line)] opacity-0 scale-75 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 grid place-items-center text-[var(--lt-ink)] z-[3]"
+        className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-(--lt-surface) border border-(--lt-line) opacity-0 scale-75 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 grid place-items-center text-(--lt-ink) z-[3]"
       >
         <svg
           width="14"
@@ -383,23 +383,23 @@ export function CabinInfo() {
             <span className="lt-numeral">✦</span>
             <span className="lt-mono">Le lieu</span>
           </div>
-          <h2 className="lt-display text-[28px] m-0 text-[var(--lt-ink)]">
+          <h2 className="lt-display text-[28px] m-0 text-(--lt-ink)">
             Un refuge boisé, ancré dans la montagne.
           </h2>
-          <p className="text-[var(--lt-ink-soft)] text-[15px] leading-relaxed max-w-[52ch] m-0">
+          <p className="text-(--lt-ink-soft) text-[15px] leading-relaxed max-w-[52ch] m-0">
             Les Tsabloz est un chalet familial niché à 1 211 mètres, en dehors
             de Vercorin. Ancien mayen, il accueille jusqu’à 10 voyageurs en
             quête de calme, de nature.
           </p>
         </div>
-        <div className="flex gap-8 pt-5 md:pt-0 border-t border-[var(--lt-line)] md:border-t-0 md:border-l md:pl-8">
+        <div className="flex gap-8 pt-5 md:pt-0 border-t border-(--lt-line) md:border-t-0 md:border-l md:pl-8">
           {[
             ["10", "voyageurs"],
             ["4", "chambres"],
             ["1 211", "mètres"],
           ].map(([n, l]) => (
             <div key={l} className="text-right">
-              <div className="lt-display text-[28px] text-[var(--lt-moss)]">
+              <div className="lt-display text-[28px] text-(--lt-moss)">
                 {n}
               </div>
               <span className="lt-mono">{l}</span>
@@ -422,7 +422,7 @@ export function CabinInfo() {
                 <span className="lt-numeral">{numeral}</span>
                 <span className="lt-mono">{label}</span>
               </div>
-              <h2 className="lt-display text-[28px] m-0 text-[var(--lt-ink)]">
+              <h2 className="lt-display text-[28px] m-0 text-(--lt-ink)">
                 Les choses à faire.
               </h2>
             </div>
@@ -436,10 +436,10 @@ export function CabinInfo() {
                       i === 0 ? "none" : "1px solid var(--lt-line-soft)",
                   }}
                 >
-                  <span className="lt-mono text-[var(--lt-moss)] pt-px">
+                  <span className="lt-mono text-(--lt-moss) pt-px">
                     {String(i + 1).padStart(2, "0")} · {rule.title}
                   </span>
-                  <span className="text-[var(--lt-ink)] text-[15px] leading-relaxed">
+                  <span className="text-(--lt-ink) text-[15px] leading-relaxed">
                     {rule.content}
                   </span>
                 </li>
