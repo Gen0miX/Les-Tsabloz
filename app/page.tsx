@@ -1,7 +1,7 @@
 // app/page.tsx — Accueil
 "use client";
 
-import { useState, useEffect, useTransition, ViewTransition } from "react";
+import { useState, useEffect, useTransition, ViewTransition, useRef } from "react";
 import { TopBar } from "@/components/brand";
 import { BookingCalendar } from "@/components/booking-calendar";
 import { BookingForm } from "@/components/booking-form";
@@ -29,6 +29,104 @@ interface ApprovedBooking {
   end_date: string;
   name: string;
   status: string;
+}
+
+const NAV_TABS = [
+  { id: 'book' as const, label: 'Réserver un séjour' },
+  { id: 'cabin' as const, label: 'Le chalet' },
+  { id: 'tarifs' as const, label: 'Tarifs' },
+]
+
+function MobileNavDropdown({
+  tab,
+  onTabChange,
+}: {
+  tab: 'book' | 'cabin' | 'tarifs'
+  onTabChange: (t: 'book' | 'cabin' | 'tarifs') => void
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const activeIndex = NAV_TABS.findIndex((t) => t.id === tab)
+  const active = NAV_TABS[activeIndex]
+
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutside)
+    return () => document.removeEventListener('mousedown', handleOutside)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative md:hidden">
+      <button
+        data-testid="nav-toggle"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center gap-2 py-3.5 px-5 bg-transparent border-none cursor-pointer -mb-px"
+        style={{ borderBottom: '2px solid var(--lt-moss)' }}
+      >
+        <span
+          className="lt-mono"
+          style={{ fontSize: 9, color: 'var(--lt-moss)' }}
+        >
+          0{activeIndex + 1}
+        </span>
+        <span
+          className="font-(--lt-font-ui) text-sm text-(--lt-ink) flex-1 text-left"
+          style={{ fontWeight: 600 }}
+        >
+          {active.label}
+        </span>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s',
+            color: 'var(--lt-ink-mute)',
+          }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute top-full left-0 right-0 z-50 bg-(--lt-surface) border border-(--lt-line) shadow-lg">
+          {NAV_TABS.filter((t) => t.id !== tab).map((t, i) => {
+            const idx = NAV_TABS.findIndex((x) => x.id === t.id)
+            return (
+              <button
+                key={t.id}
+                onClick={() => { onTabChange(t.id); setOpen(false) }}
+                className="w-full flex items-center gap-2 py-3 px-5 bg-transparent border-none cursor-pointer hover:bg-(--lt-surface-2) transition-colors text-left"
+                style={{
+                  borderTop: i > 0 ? '1px solid var(--lt-line-soft)' : undefined,
+                }}
+              >
+                <span
+                  className="lt-mono"
+                  style={{ fontSize: 9, color: 'var(--lt-ink-mute)' }}
+                >
+                  0{idx + 1}
+                </span>
+                <span className="font-(--lt-font-ui) text-sm text-(--lt-ink-soft)">
+                  {t.label}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default function Home() {
@@ -107,42 +205,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tabs */}
-      <nav className="px-5 md:px-10 lg:px-16 border-b border-(--lt-line) flex gap-0.5 bg-(--lt-surface)">
-        {(
-          [
-            { id: "book", label: "Réserver un séjour" },
-            { id: "cabin", label: "Le chalet" },
-            { id: "tarifs", label: "Tarifs" },
-          ] as const
-        ).map(({ id, label }, i) => {
-          const active = tab === id;
-          return (
-            <button
-              key={id}
-              onClick={() => handleTabChange(id)}
-              className="bg-transparent border-none py-4 px-5 font-(--lt-font-ui) text-sm cursor-pointer flex items-center gap-2 -mb-px"
-              style={{
-                fontWeight: active ? 600 : 400,
-                color: active ? "var(--lt-ink)" : "var(--lt-ink-mute)",
-                borderBottom: active
-                  ? "2px solid var(--lt-moss)"
-                  : "2px solid transparent",
-              }}
-            >
-              <span
-                className="lt-mono"
+      {/* Tabs — desktop */}
+      <nav className="px-5 md:px-10 lg:px-16 border-b border-(--lt-line) bg-(--lt-surface)">
+        {/* Mobile : dropdown */}
+        <MobileNavDropdown tab={tab} onTabChange={handleTabChange} />
+
+        {/* Desktop : onglets horizontaux */}
+        <div className="hidden md:flex gap-0.5">
+          {NAV_TABS.map(({ id, label }, i) => {
+            const active = tab === id;
+            return (
+              <button
+                key={id}
+                onClick={() => handleTabChange(id)}
+                className="bg-transparent border-none py-4 px-5 font-(--lt-font-ui) text-sm cursor-pointer flex items-center gap-2 -mb-px"
                 style={{
-                  fontSize: 9,
-                  color: active ? "var(--lt-moss)" : "var(--lt-ink-mute)",
+                  fontWeight: active ? 600 : 400,
+                  color: active ? "var(--lt-ink)" : "var(--lt-ink-mute)",
+                  borderBottom: active
+                    ? "2px solid var(--lt-moss)"
+                    : "2px solid transparent",
                 }}
               >
-                0{i + 1}
-              </span>
-              {label}
-            </button>
-          );
-        })}
+                <span
+                  className="lt-mono"
+                  style={{
+                    fontSize: 9,
+                    color: active ? "var(--lt-moss)" : "var(--lt-ink-mute)",
+                  }}
+                >
+                  0{i + 1}
+                </span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
       </nav>
 
       <main className="flex-1 px-5 md:px-10 lg:px-16 py-10">
