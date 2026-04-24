@@ -198,7 +198,7 @@ export function PricingInfo() {
             <button
               type="button"
               onClick={copyIban}
-              className="lt-mono text-[11px] border border-(--lt-line) px-2.5 py-1 bg-transparent cursor-pointer text-(--lt-ink-soft) hover:text-(--lt-ink) transition-colors"
+              className="font-mono uppercase tracking-[0.04em] text-[11px] border border-(--lt-moss-ink) px-2.5 py-1 bg-transparent cursor-pointer text-(--lt-moss-ink) hover:text-(--lt-moss) hover:border-(--lt-moss) transition-colors"
             >
               {copied ? "Copié !" : "Copier"}
             </button>

@@ -273,7 +273,7 @@ function GalleryTile({
       aria-label={`Agrandir l'image ${image.label}`}
       className={cn(
         "lt-placeholder lt-gallery-item group relative overflow-hidden",
-        "cursor-zoom-in transition-all duration-500",
+        "cursor-pointer transition-all duration-500",
         "hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-8px_oklch(from_var(--lt-ink)_l_c_h/0.18)]",
         className,
       )}
@@ -393,9 +393,7 @@ export function CabinInfo() {
             ["1 211", "mètres"],
           ].map(([n, l]) => (
             <div key={l} className="text-right">
-              <div className="lt-display text-[28px] text-(--lt-moss)">
-                {n}
-              </div>
+              <div className="lt-display text-[28px] text-(--lt-moss)">{n}</div>
               <span className="lt-mono">{l}</span>
             </div>
           ))}

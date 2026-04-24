@@ -109,7 +109,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
               type="button"
               onClick={onClose}
               aria-label="Fermer"
-              className="w-10 h-10 rounded-full border border-white/25 text-white inline-flex items-center justify-center transition hover:bg-white/10 hover:rotate-90 duration-200"
+              className="w-10 h-10 rounded-full border border-white/25 text-white inline-flex items-center justify-center transition hover:bg-white/10 hover:rotate-90 duration-200 cursor-pointer"
             >
               <svg
                 width="16"
@@ -135,7 +135,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
               type="button"
               onClick={() => go(-1)}
               aria-label="Image précédente"
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-13 md:h-13 rounded-full border border-white/25 bg-black/40 text-white inline-flex items-center justify-center backdrop-blur transition hover:bg-white/15 hover:-translate-x-0.5 z-10"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-13 md:h-13 rounded-full border border-white/25 bg-black/40 text-white inline-flex items-center justify-center backdrop-blur transition hover:bg-white/15 hover:-translate-x-0.5 z-10 cursor-pointer"
             >
               <svg
                 width="20"
@@ -180,7 +180,7 @@ export function ImageViewer({ images, openIndex, onClose }: Props) {
               type="button"
               onClick={() => go(1)}
               aria-label="Image suivante"
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-13 md:h-13 rounded-full border border-white/25 bg-black/40 text-white inline-flex items-center justify-center backdrop-blur transition hover:bg-white/15 hover:translate-x-0.5 z-10"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-13 md:h-13 rounded-full border border-white/25 bg-black/40 text-white inline-flex items-center justify-center backdrop-blur transition hover:bg-white/15 hover:translate-x-0.5 z-10 cursor-pointer"
             >
               <svg
                 width="20"
