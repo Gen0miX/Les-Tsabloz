@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Spinner } from '@/components/ui/spinner'
 import { StatusBadge } from '@/components/brand'
+import { formatSwissDate } from '@/lib/format'
 import type { Booking } from '@/types/booking'
 
 interface BookingCardProps {
   booking: Booking
   onStatusChange: (id: string, status: 'approved' | 'rejected') => void
+  readOnly?: boolean
 }
 
 const STATUS_BORDER = {
@@ -25,7 +27,7 @@ function nightsBetween(a: string, b: string) {
   return Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
 }
 
-export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
+export function BookingCard({ booking, onStatusChange, readOnly = false }: BookingCardProps) {
   const [loading, setLoading] = useState<'approved' | 'rejected' | null>(null)
   const [confirmCancel, setConfirmCancel] = useState(false)
 
@@ -49,7 +51,10 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
   return (
     <div
       className="rounded-[var(--lt-radius-lg)] border border-[var(--lt-line)] bg-[var(--lt-surface)] p-[18px] flex flex-col gap-3"
-      style={{ borderLeft: `3px solid ${STATUS_BORDER[booking.status]}` }}
+      style={{
+        borderLeft: `3px solid ${STATUS_BORDER[booking.status]}`,
+        opacity: readOnly ? 0.65 : 1,
+      }}
     >
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 min-w-0">
@@ -69,7 +74,7 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
       <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
         <div>
           <span className="lt-mono">Du</span>
-          <div className="text-[14.5px] mt-0.5">{booking.start_date}</div>
+          <div className="text-[14.5px] mt-0.5">{formatSwissDate(booking.start_date)}</div>
         </div>
         <div className="flex-1 flex items-center">
           <div className="flex-1 h-px bg-[var(--lt-line)] relative">
@@ -80,7 +85,7 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
         </div>
         <div className="text-right">
           <span className="lt-mono">Au</span>
-          <div className="text-[14.5px] mt-0.5">{booking.end_date}</div>
+          <div className="text-[14.5px] mt-0.5">{formatSwissDate(booking.end_date)}</div>
         </div>
       </div>
 
@@ -90,7 +95,7 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
         </div>
       )}
 
-      {booking.status === 'pending' && (
+      {!readOnly && booking.status === 'pending' && (
         <div className="flex gap-2 mt-0.5">
           <Button
             size="sm"
@@ -126,7 +131,7 @@ export function BookingCard({ booking, onStatusChange }: BookingCardProps) {
         </div>
       )}
 
-      {booking.status === 'approved' && (
+      {!readOnly && booking.status === 'approved' && (
         <div className="flex items-center gap-2 mt-0.5">
           {confirmCancel ? (
             <>

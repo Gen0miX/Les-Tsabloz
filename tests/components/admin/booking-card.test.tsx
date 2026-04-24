@@ -1,6 +1,7 @@
 // tests/components/admin/booking-card.test.tsx
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BookingCard } from '@/components/admin/booking-card'
+import { formatSwissDate } from '@/lib/format'
 import type { Booking } from '@/types/booking'
 
 const approvedBooking: Booking = {
@@ -59,5 +60,25 @@ describe('BookingCard — approved', () => {
         body: JSON.stringify({ status: 'rejected' }),
       })
     )
+  })
+})
+
+describe('BookingCard — Swiss date display', () => {
+  it('affiche les dates au format JJ.MM.AAAA', () => {
+    render(<BookingCard booking={approvedBooking} onStatusChange={() => {}} />)
+    expect(screen.getByText(formatSwissDate(approvedBooking.start_date))).toBeInTheDocument()
+    expect(screen.getByText(formatSwissDate(approvedBooking.end_date))).toBeInTheDocument()
+  })
+})
+
+describe('BookingCard — readOnly mode', () => {
+  it('n\'affiche pas le bouton Annuler quand readOnly=true', () => {
+    render(<BookingCard booking={approvedBooking} onStatusChange={() => {}} readOnly />)
+    expect(screen.queryByRole('button', { name: /annuler/i })).not.toBeInTheDocument()
+  })
+
+  it('affiche les dates normalement en mode readOnly', () => {
+    render(<BookingCard booking={approvedBooking} onStatusChange={() => {}} readOnly />)
+    expect(screen.getByText(formatSwissDate(approvedBooking.start_date))).toBeInTheDocument()
   })
 })
