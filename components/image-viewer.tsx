@@ -302,11 +302,11 @@ function MediaFrame({ img }: { img: ViewerImage }) {
           }}
         />
       )}
-      <div className="absolute bottom-4 left-4 right-4 flex items-baseline gap-3.5 px-3.5 py-2.5 rounded-lg bg-black/55 backdrop-blur text-white z-20">
+      <div className="absolute bottom-3 md:bottom-4 left-3 md:left-4 right-3 md:right-4 flex items-baseline gap-2 md:gap-3.5 px-2.5 md:px-3.5 py-1.5 md:py-2.5 rounded-lg bg-black/55 backdrop-blur text-white z-20">
         <span className="font-mono text-[10.5px] tracking-widest uppercase text-white/60">
           {img.num ?? ""}
         </span>
-        <span className="font-heading text-[18px] tracking-[-0.01em]">
+        <span className="font-heading text-[13px] md:text-[18px] tracking-[-0.01em]">
           {img.label}
         </span>
       </div>
