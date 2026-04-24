@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url)
   const token = url.searchParams.get('token')
 
-  if (!token || token !== process.env.ICAL_SECRET) {
+  if (!token || token !== process.env.ICAL_SECRET!.trim()) {
     return new Response('Unauthorized', { status: 401 })
   }
 

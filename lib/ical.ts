@@ -25,7 +25,7 @@ function wrapCalendar(events: string[]): string {
     'METHOD:PUBLISH',
     ...events,
     'END:VCALENDAR',
-  ].join('\r\n')
+  ].join('\r\n') + '\r\n'
 }
 
 export function generateICSFeed(bookings: Booking[]): string {

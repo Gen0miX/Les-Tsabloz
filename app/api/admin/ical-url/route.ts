@@ -9,7 +9,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const base = process.env.NEXT_PUBLIC_BASE_URL!
-  const token = process.env.ICAL_SECRET!
-  return NextResponse.json({ url: `${base}/api/ical?token=${token}` })
+  const base = process.env.NEXT_PUBLIC_BASE_URL!.trim()
+  const token = process.env.ICAL_SECRET!.trim()
+  return NextResponse.json({ url: `${base}/api/ical?token=${encodeURIComponent(token)}` })
 }
