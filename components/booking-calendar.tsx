@@ -28,6 +28,19 @@ export function BookingCalendar({
     to: new Date(r.end_date + "T00:00:00"),
   }));
 
+  function handleSelect(range: DateRange | undefined) {
+    if (range?.from && range?.to) {
+      const overlaps = disabledDates.some(
+        ({ from, to }) => range.from! <= to && range.to! >= from
+      );
+      if (overlaps) {
+        onSelectRange(undefined);
+        return;
+      }
+    }
+    onSelectRange(range);
+  }
+
   return (
     <div className="rounded-(--lt-radius-lg) border border-(--lt-line) bg-(--lt-surface) p-5 flex flex-col gap-3.5">
       <div className="flex items-baseline justify-between">
@@ -41,13 +54,13 @@ export function BookingCalendar({
       <Calendar
         mode="range"
         selected={selectedRange}
-        onSelect={onSelectRange}
+        onSelect={handleSelect}
         disabled={[{ before: today }, ...disabledDates]}
         numberOfMonths={1}
         className="w-full"
         modifiers={{ booked: disabledDates }}
         modifiersClassNames={{
-          booked: "opacity-40 line-through cursor-not-allowed",
+          booked: "opacity-60 cursor-not-allowed [&_button]:line-through [&_button]:text-[color:var(--lt-rust)]",
         }}
       />
 
