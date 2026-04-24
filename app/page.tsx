@@ -77,7 +77,7 @@ export default function Home() {
       <TopBar />
 
       {/* Editorial hero strip */}
-      <section className="px-10 md:px-16 pt-12 pb-8 border-b border-(--lt-line) bg-(--lt-bg)">
+      <section className="px-5 md:px-10 lg:px-16 pt-12 pb-8 border-b border-(--lt-line) bg-(--lt-bg)">
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-end">
           <div>
             <span className="lt-mono text-(--lt-moss)">
@@ -97,7 +97,7 @@ export default function Home() {
               </em>
             </h1>
           </div>
-          <div className="pl-7 border-l border-(--lt-line) self-end">
+          <div className="border-t pt-4 md:border-t-0 md:border-l md:pl-7 border-(--lt-line) self-end">
             <p className="text-(--lt-ink-soft) text-[15px] leading-relaxed m-0 max-w-[38ch]">
               Choisis tes dates sur le calendrier, remplis le formulaire — ta
               réservation devra ensuite être confirmée. <br /> Tu recevras la
@@ -108,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* Tabs */}
-      <nav className="px-10 md:px-16 border-b border-(--lt-line) flex gap-0.5 bg-(--lt-surface)">
+      <nav className="px-5 md:px-10 lg:px-16 border-b border-(--lt-line) flex gap-0.5 bg-(--lt-surface)">
         {(
           [
             { id: "book", label: "Réserver un séjour" },
@@ -145,7 +145,7 @@ export default function Home() {
         })}
       </nav>
 
-      <main className="flex-1 px-10 md:px-16 py-10">
+      <main className="flex-1 px-5 md:px-10 lg:px-16 py-10">
         <ViewTransition key={tab} name="tab-content" share="auto" enter="auto" default="none">
           {tab === "book" ? (
             <div className="grid md:grid-cols-2 gap-7 items-start max-w-6xl mx-auto">
@@ -173,7 +173,7 @@ export default function Home() {
         </ViewTransition>
       </main>
 
-      <footer className="px-10 md:px-16 py-6 border-t border-(--lt-line) flex justify-between bg-(--lt-surface)">
+      <footer className="px-5 md:px-10 lg:px-16 py-6 border-t border-(--lt-line) flex flex-col gap-1 md:flex-row md:justify-between bg-(--lt-surface)">
         <span className="lt-mono">Les Tsabloz · Vercorin · Valais</span>
         <span className="lt-mono">Pour la famille & les amis</span>
       </footer>
