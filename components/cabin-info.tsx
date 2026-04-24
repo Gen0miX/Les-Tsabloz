@@ -329,50 +329,44 @@ export function CabinInfo() {
   return (
     <div className="flex flex-col gap-11">
       {/* Asymmetric gallery — clickable */}
-      <div
-        className="grid gap-2.5"
-        style={{
-          gridTemplateColumns: "1.6fr 1fr",
-          gridTemplateRows: "200px 200px",
-        }}
-      >
+      <div className="grid gap-2.5 grid-cols-1 md:grid-cols-[1.6fr_1fr]">
         <GalleryTile
           index={0}
           image={CABIN_IMAGES[0]}
           onOpen={setViewerIndex}
-          className="row-span-2 h-full"
+          className="h-[45vw] md:row-span-2 md:h-[400px]"
         />
         <GalleryTile
           index={1}
           image={CABIN_IMAGES[1]}
           onOpen={setViewerIndex}
-          className="h-full"
+          className="h-[35vw] md:h-[195px]"
         />
         <GalleryTile
           index={2}
           image={CABIN_IMAGES[2]}
           onOpen={setViewerIndex}
-          className="h-full"
+          className="h-[35vw] md:h-[195px]"
         />
       </div>
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
         <GalleryTile
           index={3}
           image={CABIN_IMAGES[3]}
           onOpen={setViewerIndex}
-          className="h-[140px]"
+          className="h-[30vw] md:h-[140px]"
         />
         <GalleryTile
           index={4}
           image={CABIN_IMAGES[4]}
           onOpen={setViewerIndex}
-          className="h-[140px]"
+          className="h-[30vw] md:h-[140px]"
         />
         <GalleryTile
           index={5}
           image={CABIN_IMAGES[5]}
           onOpen={setViewerIndex}
-          className="h-[140px]"
+          className="h-[30vw] md:h-[140px]"
         />
       </div>
 
