@@ -3,6 +3,7 @@
 
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import { fr } from "date-fns/locale";
 
 interface BookedRange {
   start_date: string;
@@ -31,7 +32,7 @@ export function BookingCalendar({
   function handleSelect(range: DateRange | undefined) {
     if (range?.from && range?.to) {
       const overlaps = disabledDates.some(
-        ({ from, to }) => range.from! <= to && range.to! >= from
+        ({ from, to }) => range.from! <= to && range.to! >= from,
       );
       if (overlaps) {
         onSelectRange(undefined);
@@ -57,10 +58,13 @@ export function BookingCalendar({
         onSelect={handleSelect}
         disabled={[{ before: today }, ...disabledDates]}
         numberOfMonths={1}
+        locale={fr}
+        weekStartsOn={1}
         className="w-full"
         modifiers={{ booked: disabledDates }}
         modifiersClassNames={{
-          booked: "opacity-60 cursor-not-allowed [&_button]:line-through [&_button]:text-[color:var(--lt-rust)]",
+          booked:
+            "opacity-60 cursor-not-allowed [&_button]:line-through [&_button]:text-[color:var(--lt-rust)]",
         }}
       />
 
