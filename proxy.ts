@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 import { createServerClient } from '@supabase/ssr'
 
-const PUBLIC_PATHS = ['/login', '/admin/login', '/api/auth/login', '/api/auth/logout', '/api/ical']
+const PUBLIC_PATHS = ['/login', '/admin/login', '/api/auth/login', '/api/auth/logout', '/api/ical', '/robots.txt', '/sitemap.xml']
 
 function guestSecret(): Uint8Array {
   return new TextEncoder().encode(process.env.COOKIE_SECRET!)
