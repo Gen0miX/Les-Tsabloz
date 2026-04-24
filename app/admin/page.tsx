@@ -135,6 +135,7 @@ export default function AdminPage() {
         case 'created_desc': return b.created_at.localeCompare(a.created_at)
         case 'name_asc':     return a.name.localeCompare(b.name)
         case 'name_desc':    return b.name.localeCompare(a.name)
+        default:             return 0
       }
     })
   }, [bookings, filter, search, sortKey])
