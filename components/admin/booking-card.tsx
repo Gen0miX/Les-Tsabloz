@@ -1,52 +1,56 @@
 // components/admin/booking-card.tsx
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Spinner } from '@/components/ui/spinner'
-import { StatusBadge } from '@/components/brand'
-import { formatSwissDate } from '@/lib/format'
-import type { Booking } from '@/types/booking'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import { StatusBadge } from "@/components/brand";
+import { formatSwissDate } from "@/lib/format";
+import type { Booking } from "@/types/booking";
 
 interface BookingCardProps {
-  booking: Booking
-  onStatusChange: (id: string, status: 'approved' | 'rejected') => void
-  readOnly?: boolean
+  booking: Booking;
+  onStatusChange: (id: string, status: "approved" | "rejected") => void;
+  readOnly?: boolean;
 }
 
 const STATUS_BORDER = {
-  pending: 'var(--lt-amber)',
-  approved: 'var(--lt-moss)',
-  rejected: 'var(--lt-rust)',
-} as const
+  pending: "var(--lt-amber)",
+  approved: "var(--lt-moss)",
+  rejected: "var(--lt-rust)",
+} as const;
 
 function nightsBetween(a: string, b: string) {
-  const d1 = new Date(a + 'T00:00:00')
-  const d2 = new Date(b + 'T00:00:00')
-  return Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
+  const d1 = new Date(a + "T00:00:00");
+  const d2 = new Date(b + "T00:00:00");
+  return Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 }
 
-export function BookingCard({ booking, onStatusChange, readOnly = false }: BookingCardProps) {
-  const [loading, setLoading] = useState<'approved' | 'rejected' | null>(null)
-  const [confirmCancel, setConfirmCancel] = useState(false)
+export function BookingCard({
+  booking,
+  onStatusChange,
+  readOnly = false,
+}: BookingCardProps) {
+  const [loading, setLoading] = useState<"approved" | "rejected" | null>(null);
+  const [confirmCancel, setConfirmCancel] = useState(false);
 
-  async function handleAction(status: 'approved' | 'rejected') {
-    setLoading(status)
+  async function handleAction(status: "approved" | "rejected") {
+    setLoading(status);
     try {
       const res = await fetch(`/api/admin/bookings/${booking.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
-      })
-      if (res.ok) onStatusChange(booking.id, status)
-      else setConfirmCancel(false)
+      });
+      if (res.ok) onStatusChange(booking.id, status);
+      else setConfirmCancel(false);
     } finally {
-      setLoading(null)
+      setLoading(null);
     }
   }
 
-  const nights = nightsBetween(booking.start_date, booking.end_date)
+  const nights = nightsBetween(booking.start_date, booking.end_date);
 
   return (
     <div
@@ -71,21 +75,25 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
         <StatusBadge status={booking.status} />
       </div>
 
-      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
+      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-(--lt-surface-2) rounded-lg">
         <div>
           <span className="lt-mono">Du</span>
-          <div className="text-[14.5px] mt-0.5">{formatSwissDate(booking.start_date)}</div>
+          <div className="text-[14.5px] mt-0.5">
+            {formatSwissDate(booking.start_date)}
+          </div>
         </div>
         <div className="flex-1 flex items-center">
           <div className="flex-1 h-px bg-(--lt-line) relative">
-            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[var(--lt-surface-2)] px-2 font-mono text-[10px] text-(--lt-moss)">
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-(--lt-surface-2) px-2 font-mono text-[10px] text-(--lt-moss)">
               {nights} nuits
             </span>
           </div>
         </div>
         <div className="text-right">
           <span className="lt-mono">Au</span>
-          <div className="text-[14.5px] mt-0.5">{formatSwissDate(booking.end_date)}</div>
+          <div className="text-[14.5px] mt-0.5">
+            {formatSwissDate(booking.end_date)}
+          </div>
         </div>
       </div>
 
@@ -95,43 +103,43 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
         </div>
       )}
 
-      {!readOnly && booking.status === 'pending' && (
+      {!readOnly && booking.status === "pending" && (
         <div className="flex gap-2 mt-0.5">
           <Button
             size="sm"
-            onClick={() => handleAction('approved')}
+            onClick={() => handleAction("approved")}
             disabled={!!loading}
             className="bg-(--lt-moss) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
           >
-            {loading === 'approved' ? (
+            {loading === "approved" ? (
               <span className="flex items-center gap-2">
                 <Spinner className="h-3.5 w-3.5" />
                 Validation…
               </span>
             ) : (
-              '✓ Accepter'
+              "✓ Accepter"
             )}
           </Button>
           <Button
             size="sm"
             variant="outline"
-            onClick={() => handleAction('rejected')}
+            onClick={() => handleAction("rejected")}
             disabled={!!loading}
             className="text-(--lt-rust) border-[oklch(from_var(--lt-rust)_l_c_h_/_0.3)] hover:bg-(--lt-rust-soft)"
           >
-            {loading === 'rejected' ? (
+            {loading === "rejected" ? (
               <span className="flex items-center gap-2">
                 <Spinner className="h-3.5 w-3.5" />
                 Refus…
               </span>
             ) : (
-              '✕ Refuser'
+              "✕ Refuser"
             )}
           </Button>
         </div>
       )}
 
-      {!readOnly && booking.status === 'approved' && (
+      {!readOnly && booking.status === "approved" && (
         <div className="flex items-center gap-2 mt-0.5">
           {confirmCancel ? (
             <>
@@ -140,17 +148,17 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
               </span>
               <Button
                 size="sm"
-                onClick={() => handleAction('rejected')}
+                onClick={() => handleAction("rejected")}
                 disabled={!!loading}
                 className="bg-(--lt-rust) hover:brightness-95 text-[oklch(0.98_0.01_90)]"
               >
-                {loading === 'rejected' ? (
+                {loading === "rejected" ? (
                   <span className="flex items-center gap-2">
                     <Spinner className="h-3.5 w-3.5" />
                     Annulation…
                   </span>
                 ) : (
-                  'Oui'
+                  "Oui"
                 )}
               </Button>
               <Button
@@ -175,7 +183,7 @@ export function BookingCard({ booking, onStatusChange, readOnly = false }: Booki
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export function BookingCardSkeleton() {
@@ -189,7 +197,7 @@ export function BookingCardSkeleton() {
         </div>
         <Skeleton className="h-5 w-16 rounded-full" />
       </div>
-      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-[var(--lt-surface-2)] rounded-lg">
+      <div className="flex items-center gap-3.5 px-3.5 py-2.5 bg-(--lt-surface-2) rounded-lg">
         <Skeleton className="h-8 w-20" />
         <div className="flex-1 h-px bg-(--lt-line)" />
         <Skeleton className="h-8 w-20" />
@@ -199,5 +207,5 @@ export function BookingCardSkeleton() {
         <Skeleton className="h-8 w-24 rounded-md" />
       </div>
     </div>
-  )
+  );
 }
