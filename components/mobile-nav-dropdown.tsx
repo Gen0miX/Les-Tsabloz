@@ -29,8 +29,15 @@ export function MobileNavDropdown({
         setOpen(false)
       }
     }
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false)
+    }
     document.addEventListener('mousedown', handleOutside)
-    return () => document.removeEventListener('mousedown', handleOutside)
+    document.addEventListener('keydown', handleEscape)
+    return () => {
+      document.removeEventListener('mousedown', handleOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
   }, [open])
 
   return (
@@ -38,7 +45,7 @@ export function MobileNavDropdown({
       <button
         type="button"
         data-testid="nav-toggle"
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-2 py-3.5 px-5 bg-transparent border-none cursor-pointer -mb-px"
@@ -74,13 +81,14 @@ export function MobileNavDropdown({
       </button>
 
       {open && (
-        <div role="listbox" className="absolute top-full left-0 right-0 z-50 bg-(--lt-surface) border border-(--lt-line) shadow-lg">
+        <div role="menu" className="absolute top-full left-0 right-0 z-50 bg-(--lt-surface) border border-(--lt-line) shadow-lg">
           {NAV_TABS.filter((t) => t.id !== tab).map((t, i) => {
             const idx = NAV_TABS.findIndex((x) => x.id === t.id)
             return (
               <button
                 type="button"
                 key={t.id}
+                role="menuitem"
                 onClick={() => { onTabChange(t.id); setOpen(false) }}
                 className="w-full flex items-center gap-2 py-3 px-5 bg-transparent border-none cursor-pointer hover:bg-(--lt-surface-2) transition-colors text-left"
                 style={{
