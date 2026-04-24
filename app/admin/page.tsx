@@ -276,7 +276,7 @@ export default function AdminPage() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Rechercher…"
+                placeholder="Rechercher par nom ou email…"
                 className="h-8 px-3 text-sm rounded-md border border-[var(--lt-line)] bg-[var(--lt-surface)] text-[var(--lt-ink)] placeholder:text-[var(--lt-ink-mute)] focus:outline-none focus:border-[var(--lt-moss)] w-44"
               />
               <select

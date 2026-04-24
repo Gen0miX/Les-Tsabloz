@@ -81,4 +81,11 @@ describe('BookingCard — readOnly mode', () => {
     render(<BookingCard booking={approvedBooking} onStatusChange={() => {}} readOnly />)
     expect(screen.getByText(formatSwissDate(approvedBooking.start_date))).toBeInTheDocument()
   })
+
+  it('applique une opacité réduite en mode readOnly', () => {
+    const { container } = render(
+      <BookingCard booking={approvedBooking} onStatusChange={() => {}} readOnly />
+    )
+    expect(container.firstChild).toHaveStyle('opacity: 0.65')
+  })
 })
