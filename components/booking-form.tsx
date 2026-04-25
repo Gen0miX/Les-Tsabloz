@@ -14,6 +14,13 @@ interface BookingFormProps {
   onSuccess: (booking: Booking) => void;
 }
 
+function toLocalDateString(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 const DAY_FR = [
   "dimanche",
   "lundi",
@@ -52,8 +59,12 @@ export function BookingForm({ selectedRange, onSuccess }: BookingFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const startDate = selectedRange?.from?.toISOString().split("T")[0];
-  const endDate = selectedRange?.to?.toISOString().split("T")[0];
+  const startDate = selectedRange?.from
+    ? toLocalDateString(selectedRange.from)
+    : undefined;
+  const endDate = selectedRange?.to
+    ? toLocalDateString(selectedRange.to)
+    : undefined;
   const canSubmit = !!startDate && !!endDate && !!name && !!email;
 
   const nights =
