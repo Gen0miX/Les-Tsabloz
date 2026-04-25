@@ -245,10 +245,10 @@ export default function AdminPage() {
 
       {/* Main */}
       <div className="flex flex-col">
-        <header className="px-9 py-5 border-b border-(--lt-line) flex justify-between items-center bg-(--lt-surface)">
+        <header className="px-4 py-4 md:px-9 md:py-5 border-b border-(--lt-line) flex justify-between items-center bg-(--lt-surface)">
           <div>
             <span className="lt-mono">Espace admin</span>
-            <h1 className="lt-display text-[26px] mt-1">
+            <h1 className="lt-display text-[20px] md:text-[26px] mt-1">
               Tableau des réservations
             </h1>
           </div>
@@ -273,7 +273,7 @@ export default function AdminPage() {
         </header>
 
         {/* Stats */}
-        <div className="px-9 py-7 border-b border-(--lt-line-soft) grid grid-cols-2 md:grid-cols-4 gap-3.5">
+        <div className="px-4 py-5 md:px-9 md:py-7 border-b border-(--lt-line-soft) grid grid-cols-2 md:grid-cols-4 gap-3.5">
           {[
             {
               label: "Demandes en attente",
@@ -312,8 +312,8 @@ export default function AdminPage() {
         </div>
 
         {/* List */}
-        <main className="px-9 py-7 flex-1">
-          <div className="flex justify-between items-center mb-4 gap-4">
+        <main className="px-4 py-5 md:px-9 md:py-7 flex-1">
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center mb-4">
             <div>
               <span className="lt-mono text-(--lt-moss)">
                 {section.numeral}
@@ -326,13 +326,13 @@ export default function AdminPage() {
               </h2>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2">
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Rechercher…"
-                className="h-8 px-3 text-sm rounded-md border border-(--lt-line) bg-(--lt-surface) text-(--lt-ink) placeholder:text-(--lt-ink-mute) focus:outline-none focus:border-(--lt-moss) w-44"
+                className="h-8 px-3 text-sm rounded-md border border-(--lt-line) bg-(--lt-surface) text-(--lt-ink) placeholder:text-(--lt-ink-mute) focus:outline-none focus:border-(--lt-moss) w-full sm:w-44"
               />
               <select
                 value={sortKey}
